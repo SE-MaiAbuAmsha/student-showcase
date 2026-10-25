@@ -1,0 +1,22 @@
+:root {
+  --navy: #0B1F4B;
+  --blue: #243F80;
+  --cream: #FDF0D5;
+  --cream-soft: #FFF9EE;
+  --sky: #9CC3E6;
+  --text-muted: #4A5675;
+
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-heading: 'Fraunces', Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--navy);
+  background: var(--cream);
+}
