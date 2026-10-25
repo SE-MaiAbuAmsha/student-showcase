@@ -1,10 +1,9 @@
-import { useState } from "react";
+import Navbar from "./components/Navbar.jsx";
 
 function App() {
   return (
     <>
-      <h1 style={{ fontFamily: "var(--font-heading)" }}>Women in Tech</h1>
-      <p>Student showcase</p>
+      <Navbar />
     </>
   );
 }

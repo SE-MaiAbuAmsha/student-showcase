@@ -1,10 +1,14 @@
 :root {
-  --navy: #0B1F4B;
-  --blue: #243F80;
-  --cream: #FDF0D5;
-  --cream-soft: #FFF9EE;
-  --sky: #9CC3E6;
-  --text-muted: #4A5675;
+  /* الباليت الأساسية */
+  --ink: #010736;
+  --navy: #0D1C42;
+  --blue: #22396F;
+  --cream: #FCF1D0;
+
+  /* درجات مشتقة منها */
+  --cream-soft: #FFF9E8;
+  --blue-300: #7F9AD6;
+  --blue-100: #C9D6F2;
 
   --font-body: 'DM Sans', system-ui, sans-serif;
   --font-heading: 'Fraunces', Georgia, serif;
@@ -17,6 +21,6 @@
 body {
   margin: 0;
   font-family: var(--font-body);
-  color: var(--navy);
+  color: var(--ink);
   background: var(--cream);
 }
