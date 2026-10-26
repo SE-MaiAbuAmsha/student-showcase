@@ -1,11 +1,11 @@
-import Plane from "./plane";
+import PlaneField from "./PlaneField.jsx"; // بدل import Plane
 import "./Hero.css";
 
 function Hero() {
   return (
     <section className="hero">
       <div className="hero__planes" aria-hidden="true">
-        <Plane />
+        <PlaneField />
       </div>
 
       <div className="hero__content">

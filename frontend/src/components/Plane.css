@@ -1,17 +1,34 @@
 .plane {
   position: absolute;
-  top: 25%;
   left: 0;
-  width: 120px;
-  color: var(--blue-300);
-  animation: fly-right 30s linear infinite;
+  animation-duration: var(--duration);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay: var(--delay);
+}
+
+.plane--right { animation-name: fly-right; }
+.plane--left  { animation-name: fly-left; }
+
+.plane--left .plane__flip {
+  transform: scaleX(-1);
 }
 
 .plane__svg {
   display: block;
   width: 100%;
   height: auto;
-  animation: bob 5s ease-in-out infinite alternate;
+  animation: bob var(--bob) ease-in-out infinite alternate;
+}
+
+@keyframes fly-right {
+  from { transform: translateX(-20vw); }
+  to   { transform: translateX(110vw); }
+}
+
+@keyframes fly-left {
+  from { transform: translateX(110vw); }
+  to   { transform: translateX(-20vw); }
 }
 
 @keyframes bob {
@@ -26,11 +43,6 @@
   }
 
   .plane {
-    left: 40%;
+    left: var(--x);
   }
-}
-
-@keyframes fly-right {
-  from { transform: translateX(-20vw); }
-  to   { transform: translateX(110vw); }
 }
