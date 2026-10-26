@@ -1,0 +1,36 @@
+.plane {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 120px;
+  color: var(--blue-300);
+  animation: fly-right 30s linear infinite;
+}
+
+.plane__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: bob 5s ease-in-out infinite alternate;
+}
+
+@keyframes bob {
+  from { transform: translateY(-7px) rotate(-4deg); }
+  to   { transform: translateY(9px) rotate(4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plane,
+  .plane__svg {
+    animation: none;
+  }
+
+  .plane {
+    left: 40%;
+  }
+}
+
+@keyframes fly-right {
+  from { transform: translateX(-20vw); }
+  to   { transform: translateX(110vw); }
+}
