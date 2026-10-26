@@ -1,0 +1,42 @@
+.footer-section {
+  background-color: var(--ink); /* اللون الكحلي الغامق */
+  color: var(--cream-soft); /* لون الخط الفاتح */
+  padding: 30px 0;
+  font-size: 0.9rem;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* عشان لو صغرت الشاشة ينزلوا تحت بعض */
+  gap: 20px;
+}
+
+.footer-left p {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.footer-right {
+  display: flex;
+  gap: 25px;
+}
+
+.footer-right a {
+  color: var(--cream-soft);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.footer-right a:hover {
+  opacity: 1;
+}
+
+@media (max-width: 600px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+}

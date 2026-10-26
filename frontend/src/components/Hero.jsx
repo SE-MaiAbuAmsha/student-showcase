@@ -29,6 +29,19 @@ function Hero() {
           </a>
         </div>
       </div>
+      <div className="wave-container">
+        <svg
+          viewBox="0 0 1440 120"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,0 C480,120 960,120 1440,0 L1440,120 L0,120 Z"
+            fill="var(--cream)"
+          ></path>
+        </svg>
+      </div>
     </section>
   );
 }

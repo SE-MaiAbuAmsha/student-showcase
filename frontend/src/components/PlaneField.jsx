@@ -1,5 +1,4 @@
 import Plane from "./Plane.jsx";
-
 const PLANES = [
   {
     id: 1,
@@ -16,7 +15,7 @@ const PLANES = [
     id: 2,
     top: "20%",
     width: 90,
-    color: "#9CC3E6",
+    color: "#5b7489",
     duration: 46,
     delay: 26,
     bobDuration: 6,

@@ -1,0 +1,66 @@
+.about-section {
+  background-color: var(--cream);
+  padding: 40px 0 80px 0; /* قللنا البادينغ العلوي لأنه ملتصق بالكروت */
+  border-top: 1px solid rgba(0,0,0,0.05); /* خط خفيف يفصل */
+}
+
+.about-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.about-content {
+  max-width: 700px;
+}
+
+.about-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--blue); /* استخدمنا اللون الأزرق من الباليتة */
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.about-title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  color: var(--ink);
+  margin: 0 0 15px 0;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+.btn-dark {
+  background-color: var(--ink);
+  color: var(--cream);
+  padding: 15px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  transition: background 0.3s;
+}
+
+.btn-dark:hover {
+  background-color: var(--navy);
+}
+
+/* للجوال */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}
