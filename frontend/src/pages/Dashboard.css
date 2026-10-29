@@ -1,0 +1,162 @@
+.dashboard-page {
+  background-color: var(--cream-soft);
+  min-height: 100vh;
+  font-family: var(--font-body);
+}
+
+/* الهيدر */
+.dashboard-header {
+  background-color: var(--navy);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-btn, .logout-btn {
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.profile-btn:hover, .logout-btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* محتوى الداشبورد */
+.dashboard-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* الترحيب وكف اليد */
+.welcome-banner {
+  background-color: var(--cream);
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  animation: slideDown 0.8s ease-out;
+}
+
+.welcome-banner h1 {
+  font-family: var(--font-heading);
+  color: var(--navy);
+  margin: 10px 0 0 0;
+}
+
+.wave-emoji {
+  font-size: 3.5rem;
+  display: inline-block;
+  animation: wave-animation 2.5s infinite;
+  transform-origin: 70% 70%;
+}
+
+/* باقي التنسيقات زي ما هي (الإحصائيات، المشاريع، والأزرار) */
+.stats-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  flex: 1;
+  max-width: 300px;
+}
+
+.stat-card h3 { margin: 0 0 10px 0; font-size: 1rem; color: #666; }
+.stat-number { margin: 0; font-size: 2.5rem; font-weight: 700; color: var(--navy); }
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 { color: var(--navy); margin: 0; }
+
+.add-project-btn {
+  background-color: var(--navy);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.add-project-btn:hover { background-color: var(--blue); }
+
+.projects-list { display: flex; flex-direction: column; gap: 15px; }
+
+.project-item {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.project-item h3 { margin: 0 0 8px 0; color: var(--navy); }
+.category { font-size: 0.85rem; color: #888; }
+
+.actions { display: flex; gap: 10px; }
+
+.edit-btn, .delete-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.edit-btn { background: #e0e7ff; color: #4338ca; }
+.edit-btn:hover { background: #c7d2fe; }
+.delete-btn { background: #fee2e2; color: #b91c1c; }
+.delete-btn:hover { background: #fecaca; }
+
+/* الأنيميشن */
+@keyframes wave-animation {
+  0% { transform: rotate( 0.0deg) }
+  10% { transform: rotate(14.0deg) }
+  20% { transform: rotate(-8.0deg) }
+  30% { transform: rotate(14.0deg) }
+  40% { transform: rotate(-4.0deg) }
+  50% { transform: rotate(10.0deg) }
+  60% { transform: rotate( 0.0deg) }
+  100% { transform: rotate( 0.0deg) }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

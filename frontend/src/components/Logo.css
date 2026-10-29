@@ -1,0 +1,29 @@
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--cream);
+  text-decoration: none;
+}
+
+.logo:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 4px;
+}
+
+.logo__titles {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.logo__titles b {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 19px;
+}
+
+.logo__titles small {
+  font-size: 12px;
+  color: var(--blue-300);
+}

@@ -17,7 +17,12 @@ export default function AboutSection() {
           </p>
         </div>
         <div className="about-action">
-          <a href="#" className="btn-dark">
+          <a
+            href="https://www.paper-airplanes.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-dark"
+          >
             Learn more about our mission →
           </a>
         </div>

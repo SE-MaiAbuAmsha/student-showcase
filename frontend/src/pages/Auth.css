@@ -1,0 +1,129 @@
+/* الخلفية والطيارات */
+.auth-page {
+  background-color: var(--navy);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* الهيدر - عشان نرتب اللوجو على الشمال والأزرار على اليمين */
+.auth-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 50px;
+  position: relative;
+  z-index: 10;
+}
+
+/* الأزرار اللي على اليمين (باك وساين أب) */
+.header-actions { 
+  display: flex; 
+  align-items: center; 
+  gap: 20px; 
+}
+
+.back-link { 
+  color: #fff; 
+  text-decoration: none; 
+  font-weight: 600; 
+  font-size: 1rem; 
+  transition: color 0.2s; 
+}
+.back-link:hover { 
+  color: var(--cream); 
+}
+
+.nav-btn {
+  background-color: var(--cream);
+  color: var(--navy);
+  padding: 8px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.nav-btn:hover { 
+  background-color: #fff; 
+}
+
+/* الكارت */
+.auth-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.auth-card {
+  background-color: var(--cream);
+  width: 100%;
+  max-width: 500px;
+  border-radius: 24px;
+  padding: 50px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.auth-titles { text-align: center; margin-bottom: 30px; }
+.auth-titles h1 { font-family: var(--font-heading); color: var(--navy); font-size: 2.2rem; margin: 0 0 10px 0; }
+.auth-titles p { color: #555; font-size: 0.95rem; line-height: 1.5; margin: 0; }
+
+.auth-form { display: flex; flex-direction: column; gap: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group label { font-size: 0.75rem; font-weight: 700; color: var(--navy); letter-spacing: 0.5px; }
+.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="password"] {
+  width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid #d1d5db; background-color: #fff; font-family: var(--font-body); font-size: 1rem; outline: none; transition: border-color 0.2s;
+}
+.form-group input:focus { border-color: var(--navy); }
+
+.input-with-icon { position: relative; }
+.input-with-icon input { padding-right: 45px; }
+.input-with-icon .icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: #888; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.input-with-icon .icon:hover { color: var(--navy); }
+
+.hint { font-size: 0.75rem; color: #888; display: flex; align-items: center; gap: 5px; }
+
+/* زر التسجيل/الدخول */
+.auth-btn {
+  background-color: var(--cream-soft); 
+  color: var(--navy);
+  border: 1px solid #d1d5db;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s, transform 0.1s;
+  width: 100%;
+}
+
+.auth-btn:hover:not(:disabled) { background-color: #fff; transform: translateY(-2px); }
+.auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.auth-btn.login-style {
+  background-color: var(--navy);
+  color: var(--cream);
+  border: none;
+}
+.auth-btn.login-style:hover:not(:disabled) { background-color: var(--blue); }
+
+.auth-switch { text-align: center; margin-top: 25px; font-size: 0.9rem; color: #444; }
+.auth-switch a { color: var(--navy); font-weight: 700; text-decoration: none; }
+.auth-switch a:hover { text-decoration: underline; }
+
+.checkbox-group { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+.checkbox-group input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+.checkbox-group label { font-size: 0.85rem; color: #444; }
+
+@media (max-width: 600px) {
+  .auth-card { padding: 30px 20px; }
+  .auth-header { padding: 20px; }
+  .auth-titles h1 { font-size: 1.8rem; }
+}
+.input-with-icon button.icon { background: none; border: none; padding: 0; cursor: pointer; }

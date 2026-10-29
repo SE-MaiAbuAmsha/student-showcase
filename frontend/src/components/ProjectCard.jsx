@@ -1,37 +1,32 @@
+import { Link } from "react-router-dom";
 import "./ProjectCard.css";
 
+const CATEGORY_STYLES = {
+  Web: { bg: "#E0F2FE", text: "#0369A1" },
+  "UI/UX": { bg: "#DCFCE7", text: "#15803D" },
+  AI: { bg: "#F3E8FF", text: "#7E22CE" },
+  Data: { bg: "#FEF3C7", text: "#92400E" },
+};
+const DEFAULT_STYLE = { bg: "#E5E7EB", text: "#374151" };
+
 export default function ProjectCard({
+  id,
   category,
   title,
   author,
   description,
-  categoryColor,
+  githubUrl,
+  demoUrl,
 }) {
+  const colors = CATEGORY_STYLES[category] ?? DEFAULT_STYLE;
+
   return (
     <div className="project-card">
-      {/* الجزء العلوي: الصورة أو الـ Mockup */}
-      <div className="card-image-wrapper">
-        {/* هون بنحط الصورة اللي بتظهر بالنص، حالياً حطينا لون */}
-        <div className="mockup-placeholder">
-          <div className="mockup-dots">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div className="mockup-line long"></div>
-          <div className="mockup-line short"></div>
-          <div className="mockup-btn"></div>
-        </div>
-      </div>
-
-      {/* الجزء السفلي: التفاصيل */}
+      {/* ...كتلة الـ mockup كما هي... */}
       <div className="card-content">
         <span
           className="category-badge"
-          style={{
-            backgroundColor: categoryColor.bg,
-            color: categoryColor.text,
-          }}
+          style={{ backgroundColor: colors.bg, color: colors.text }}
         >
           {category}
         </span>
@@ -41,12 +36,20 @@ export default function ProjectCard({
 
         <div className="card-footer">
           <div className="card-links">
-            <a href="#">&lt;&gt; Code</a>
-            <a href="#">🌐 Demo</a>
+            {githubUrl && (
+              <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+                &lt;&gt; Code
+              </a>
+            )}
+            {demoUrl && (
+              <a href={demoUrl} target="_blank" rel="noopener noreferrer">
+                Demo
+              </a>
+            )}
           </div>
-          <a href="#" className="view-link">
+          <Link to={`/projects/${id}`} className="view-link">
             View project →
-          </a>
+          </Link>
         </div>
       </div>
     </div>

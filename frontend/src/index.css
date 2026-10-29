@@ -4,7 +4,7 @@
   --navy: #0D1C42;
   --blue: #22396F;
   --cream: #FCF1D0;
-
+--text-muted: #4A5675;
   /* درجات مشتقة منها */
   --cream-soft: #FFF9E8;
   --blue-300: #7F9AD6;
@@ -23,4 +23,9 @@ body {
   font-family: var(--font-body);
   color: var(--ink);
   background: var(--cream);
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }

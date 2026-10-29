@@ -1,13 +1,14 @@
 import Plane from "./Plane.jsx";
+
 const PLANES = [
   {
     id: 1,
     top: "10%",
     width: 110,
     color: "#FCF1D0",
-    duration: 40,
-    delay: 5,
-    bobDuration: 5,
+    duration: 35,
+    delay: 2,
+    bobDuration: 4,
     x: 8,
     direction: "right",
   },
@@ -16,9 +17,9 @@ const PLANES = [
     top: "20%",
     width: 90,
     color: "#5b7489",
-    duration: 46,
-    delay: 26,
-    bobDuration: 6,
+    duration: 42,
+    delay: 15,
+    bobDuration: 5,
     x: 70,
     direction: "left",
   },
@@ -27,9 +28,9 @@ const PLANES = [
     top: "32%",
     width: 150,
     color: "#9fdae6",
-    duration: 54,
-    delay: 14,
-    bobDuration: 7,
+    duration: 30,
+    delay: 8,
+    bobDuration: 6,
     x: 40,
     direction: "right",
   },
@@ -39,8 +40,8 @@ const PLANES = [
     width: 120,
     color: "#B9C4F0",
     duration: 38,
-    delay: 30,
-    bobDuration: 5,
+    delay: 22,
+    bobDuration: 4,
     x: 85,
     direction: "left",
   },
@@ -49,9 +50,9 @@ const PLANES = [
     top: "58%",
     width: 100,
     color: "#7b95e6",
-    duration: 42,
-    delay: 9,
-    bobDuration: 6,
+    duration: 32,
+    delay: 5,
+    bobDuration: 5,
     x: 20,
     direction: "right",
   },
@@ -60,9 +61,9 @@ const PLANES = [
     top: "66%",
     width: 140,
     color: "#9CC3E6",
-    duration: 50,
-    delay: 38,
-    bobDuration: 7,
+    duration: 45,
+    delay: 28,
+    bobDuration: 6,
     x: 55,
     direction: "left",
   },
@@ -71,9 +72,9 @@ const PLANES = [
     top: "16%",
     width: 85,
     color: "#B9C4F0",
-    duration: 36,
-    delay: 21,
-    bobDuration: 4,
+    duration: 28,
+    delay: 10,
+    bobDuration: 3,
     x: 30,
     direction: "left",
   },
@@ -82,9 +83,9 @@ const PLANES = [
     top: "40%",
     width: 130,
     color: "#465f93",
-    duration: 48,
-    delay: 42,
-    bobDuration: 6,
+    duration: 40,
+    delay: 35,
+    bobDuration: 5,
     x: 62,
     direction: "right",
   },
@@ -92,11 +93,11 @@ const PLANES = [
 
 function PlaneField() {
   return (
-    <>
+    <div className="plane-field" aria-hidden="true">
       {PLANES.map((plane) => (
         <Plane key={plane.id} {...plane} />
       ))}
-    </>
+    </div>
   );
 }
 

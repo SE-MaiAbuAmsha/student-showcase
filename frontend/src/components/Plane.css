@@ -1,4 +1,5 @@
-.plane {
+/* الحاوية اللي بتتحرك بالمسار */
+.plane__path {
   position: absolute;
   left: 0;
   animation-duration: var(--duration);
@@ -7,10 +8,22 @@
   animation-delay: var(--delay);
 }
 
-.plane--right { animation-name: fly-right; }
-.plane--left  { animation-name: fly-left; }
+.plane__path--right { animation-name: fly-right; }
+.plane__path--left  { animation-name: fly-left; }
 
-.plane--left .plane__flip {
+.plane {
+  width: 100%;
+  display: block;
+}
+
+.plane-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.plane__path--left .plane__flip {
   transform: scaleX(-1);
 }
 
@@ -18,17 +31,44 @@
   display: block;
   width: 100%;
   height: auto;
+  /* حركة الطفو (bob) */
   animation: bob var(--bob) ease-in-out infinite alternate;
 }
 
+/* 
+  السر هنا: خلينا الحركة تتحرك بالعرض مع شوية حركة عمودية 
+  عشان تعمل شكل القوس (Curve) عشان تحس انها طيارة حقيقية
+*/
 @keyframes fly-right {
-  from { transform: translateX(-20vw); }
-  to   { transform: translateX(110vw); }
+  0% { 
+    transform: translate(-20vw, 0vh) rotate(0deg); 
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  50% { 
+    transform: translate(50vw, -5vh) rotate(8deg); 
+  }
+  90% { opacity: 1; }
+  100% { 
+    transform: translate(110vw, 5vh) rotate(-5deg); 
+    opacity: 0;
+  }
 }
 
 @keyframes fly-left {
-  from { transform: translateX(110vw); }
-  to   { transform: translateX(-20vw); }
+  0% { 
+    transform: translate(110vw, 0vh) rotate(0deg); 
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  50% { 
+    transform: translate(50vw, 5vh) rotate(-8deg); 
+  }
+  90% { opacity: 1; }
+  100% { 
+    transform: translate(-20vw, -5vh) rotate(5deg); 
+    opacity: 0;
+  }
 }
 
 @keyframes bob {
@@ -37,12 +77,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .plane,
+  .plane__path,
   .plane__svg {
     animation: none;
   }
-
-  .plane {
+  .plane__path {
     left: var(--x);
   }
 }

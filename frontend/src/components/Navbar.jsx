@@ -1,23 +1,17 @@
-import Logo from "./Logo.jsx";
+import { Link } from "react-router-dom";
+import Logo from "./Logo";
 import "./Navbar.css";
 
 function Navbar() {
   return (
     <header className="navbar">
-      <a href="/" className="navbar__brand">
-        <Logo />
-        <div className="navbar__titles">
-          <b>Women in Tech</b>
-          <small>Student Showcase · Paper Airplanes</small>
-        </div>
-      </a>
-
+      <Logo />
       <nav className="navbar__links">
-        <a href="#">Browse Projects</a>
-        <a href="#">Login</a>
-        <a href="#" className="navbar__signup">
-          Sign Up
-        </a>
+        <Link to="/projects">Browse Projects</Link>
+        <Link to="/login">Log in</Link>
+        <Link to="/signup" className="navbar__cta">
+          Sign up
+        </Link>
       </nav>
     </header>
   );

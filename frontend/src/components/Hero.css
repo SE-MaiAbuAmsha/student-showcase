@@ -48,7 +48,6 @@ overflow: hidden;
   gap: 14px;
   margin-top: 8px;
 }
-
 .hero__btn {
   display: inline-flex;
   align-items: center;
@@ -60,19 +59,18 @@ overflow: hidden;
   font-weight: 700;
   font-size: 16px;
   text-decoration: none;
-}
-
-.hero__btn--primary {
   background: var(--cream);
   color: var(--navy);
+  transition: background 0.3s ease, color 0.3s ease; 
 }
 
-.hero__btn--primary:hover {
+.hero__btn:hover {
   background: transparent;
   color: var(--cream);
 }
 
 .hero__btn--outline {
+  background: transparent;
   color: var(--cream);
 }
 
@@ -80,46 +78,22 @@ overflow: hidden;
   background: var(--cream);
   color: var(--navy);
 }
-.hero__planes {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
 
-.hero__content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
-.hero-section {
-  background-color: var(--ink); /* أو --navy حسب تصميمك */
-  position: relative;
-  /* باقي تنسيقات الهيرو */
-  padding-bottom: 100px; /* مساحة عشان الموجة ما تغطي الكلام */
-}
-
-/* ✨ تنسيق الموجة ✨ */
-.wave-container {
+.hero__wave {
   position: absolute;
   bottom: -1px;
   left: 0;
   width: 100%;
-  overflow: hidden;
   line-height: 0;
+  z-index: 1;
 }
 
-.wave-container svg {
+.hero__wave svg {
   display: block;
   width: 100%;
-  height: 120px; /* كبريها أو صغريها حسب ارتفاع القوس اللي بدك ياه */
+  height: 120px;
 }
 
-/* شلنا حركة الـ rotate عشان القوس يكون طبيعي */
-
-.wave-container .shape-fill {
-  fill: var(--cream); /* هون سر الربط! الموجة بتاخد لون القسم اللي تحتها */
+.hero__wave path {
+  fill: var(--cream);
 }
