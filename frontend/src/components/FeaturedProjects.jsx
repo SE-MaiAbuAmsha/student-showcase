@@ -44,7 +44,6 @@ export default function FeaturedProjects() {
 
   return (
     <section className="featured-section">
-      {/* باقي الكود زي ما هو */}
       <div className="container">
         <div className="section-header">
           <div>
