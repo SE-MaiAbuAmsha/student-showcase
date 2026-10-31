@@ -21,7 +21,6 @@ function Plane({
   };
 
   return (
-    // هنا ضفنا الكلاس الجديد plane__path
     <div className={`plane__path plane__path--${direction}`} style={style}>
       <div className="plane">
         <div className="plane__flip">
