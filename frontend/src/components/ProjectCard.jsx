@@ -17,13 +17,12 @@ export default function ProjectCard({
   description,
   githubUrl,
   demoUrl,
-  image, // <-- ضفنا الصورة هون
+  image,   
 }) {
   const colors = CATEGORY_STYLES[category] ?? DEFAULT_STYLE;
 
   return (
     <div className="project-card">
-      {/* كتلة الصورة */}
       <div className="card-image-wrapper">
         {image ? (
           <img src={image} alt={title} className="project-image" />
