@@ -1,6 +1,6 @@
 .footer-section {
-  background-color: var(--ink); /* اللون الكحلي الغامق */
-  color: var(--cream-soft); /* لون الخط الفاتح */
+  background-color: var(--ink);
+  color: var(--cream-soft); 
   padding: 30px 0;
   font-size: 0.9rem;
 }
@@ -9,7 +9,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* عشان لو صغرت الشاشة ينزلوا تحت بعض */
+  flex-wrap: wrap; 
   gap: 20px;
 }
 
