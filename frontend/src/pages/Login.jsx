@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import PlaneField from "../components/PlaneField";
 import Logo from "../components/Logo";
 import "./Auth.css";
+import Footer from "../components/Footer";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ export default function Login() {
     e.preventDefault();
     const name = email.split("@")[0];
     localStorage.setItem("userName", name);
-    navigate("/dashboard");
+    navigate("/profile");
   };
 
   return (
@@ -39,7 +40,7 @@ export default function Login() {
           <div className="auth-titles">
             <h1>Welcome Back</h1>
             <p>
-              Take flight with the showcase,Log in to publish and manage your
+              Take flight with the showcase. Log in to publish and manage your
               projects.
             </p>
           </div>
@@ -72,9 +73,10 @@ export default function Login() {
             </div>
 
             <div className="form-group">
-              <label>PASSWORD</label>
+              <label htmlFor="login-password">PASSWORD</label>
               <div className="input-with-icon">
                 <input
+                  id="login-password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••••••"
                   value={password}
@@ -127,6 +129,7 @@ export default function Login() {
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

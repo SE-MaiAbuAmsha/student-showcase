@@ -1,8 +1,7 @@
-import Logo from "../components/Logo";
 function Projects() {
   return (
     <main>
-      <h1>Hello Mai</h1>
+      <h1>We will Add Projects Soon!</h1>
     </main>
   );
 }

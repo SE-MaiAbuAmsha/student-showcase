@@ -8,9 +8,9 @@ function Navbar() {
       <Logo />
       <nav className="navbar__links">
         <Link to="/projects">Browse Projects</Link>
-        <Link to="/login">Log in</Link>
+        <Link to="/login">Log In</Link>
         <Link to="/signup" className="navbar__cta">
-          Sign up
+          Sign Up
         </Link>
       </nav>
     </header>

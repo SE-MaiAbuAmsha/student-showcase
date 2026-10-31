@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import PlaneField from "../components/PlaneField";
 import "./Auth.css";
 import Logo from "../components/Logo";
+import Footer from "../components/Footer";
+import welcomeGirl from "../assets/projects/welcome-girl.jpg";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,13 +19,32 @@ export default function SignUp() {
         <Logo />
 
         <Link to="/" className="back-link">
-          ← Back
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ marginRight: "8px" }}
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back
         </Link>
       </header>
 
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-titles">
+            <img
+              src={welcomeGirl}
+              alt="Women in Tech Illustration"
+              className="welcome-illustration"
+            />
             <h1>Welcome Student</h1>
             <p>Create an account to publish and manage your projects.</p>
           </div>
@@ -167,6 +188,7 @@ export default function SignUp() {
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

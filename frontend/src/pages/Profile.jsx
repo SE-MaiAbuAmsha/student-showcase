@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+import "./Profile.css";
 
 export default function Dashboard() {
   const [userName] = useState(() => localStorage.getItem("userName"));
@@ -11,7 +13,6 @@ export default function Dashboard() {
 
   if (!userName) return <Navigate to="/login" replace />;
 
-  // بيانات وهمية للمشاريع (بدون Status)
   const myProjects = [
     { id: 1, title: "Weather Dashboard", category: "Web" },
     { id: 2, title: "My Portfolio", category: "UI/UX" },
@@ -19,9 +20,8 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-page">
-      {/* الهيدر الخاص بالداشبورد */}
       <header className="dashboard-header">
-        <h2>My Dashboard</h2>
+        <h2>My Profile</h2>
 
         <div className="header-actions">
           <button className="profile-btn" title="Profile">
@@ -39,7 +39,6 @@ export default function Dashboard() {
             </svg>
           </button>
 
-          {/* أيقونة تسجيل الخروج */}
           <Link
             to="/"
             className="logout-btn"
@@ -64,7 +63,6 @@ export default function Dashboard() {
       </header>
 
       <main className="dashboard-content">
-        {/* الترحيب وكف اليد */}
         {showWelcome && (
           <div className="welcome-banner">
             <div className="wave-emoji">👋</div>
@@ -72,7 +70,6 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* إحصائيات سريعة */}
         <div className="stats-container">
           <div className="stat-card">
             <h3>Total Projects</h3>
@@ -80,7 +77,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* قائمة المشاريع */}
         <div className="projects-section">
           <div className="section-header">
             <h2>My Projects</h2>

@@ -1,17 +1,20 @@
 import ProjectCard from "./ProjectCard";
 import "./FeaturedProjects.css";
-import { Link } from "react-router-dom";
+
+import weatherImg from "../assets/projects/weather-dashboard.jpeg";
+import budgetImg from "../assets/projects/budget-buddy.jpeg";
+import quizImg from "../assets/projects/student-quiz-bot.jpeg";
 
 export default function FeaturedProjects() {
-  // بيانات وهمية (حالياً) لحد ما نربطها بالباك إند
   const dummyProjects = [
     {
       id: 1,
       title: "Weather Dashboard",
       author: "Sara",
-      category: "Web",
       description:
         "A responsive dashboard that shows a five-day forecast for any city with live radar overlay.",
+      category: "Web",
+      image: weatherImg,
       githubUrl: "https://github.com",
       demoUrl: "https://example.com",
     },
@@ -19,9 +22,10 @@ export default function FeaturedProjects() {
       id: 2,
       title: "Budget Buddy",
       author: "Lina",
-      category: "UI/UX",
       description:
         "A simple app to track daily spending, visualize recurring expenses, and set monthly limits.",
+      category: "UI/UX",
+      image: budgetImg,
       githubUrl: "https://github.com",
       demoUrl: "https://example.com",
     },
@@ -29,9 +33,10 @@ export default function FeaturedProjects() {
       id: 3,
       title: "Study Quiz Bot",
       author: "Noor",
-      category: "AI",
       description:
         "A conversational bot that converts raw lecture notes into interactive flashcards and practice questions.",
+      category: "AI",
+      image: quizImg,
       githubUrl: "https://github.com",
       demoUrl: "https://example.com",
     },
@@ -39,6 +44,7 @@ export default function FeaturedProjects() {
 
   return (
     <section className="featured-section">
+      {/* باقي الكود زي ما هو */}
       <div className="container">
         <div className="section-header">
           <div>
@@ -47,9 +53,9 @@ export default function FeaturedProjects() {
               Projects built by students in the program
             </p>
           </div>
-          <Link to="/projects" className="view-all">
+          <a href="#" className="view-all">
             View all projects →
-          </Link>
+          </a>
         </div>
 
         <div className="projects-grid">
