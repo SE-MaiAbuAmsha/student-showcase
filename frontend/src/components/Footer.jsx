@@ -5,15 +5,15 @@ export default function Footer() {
   return (
     <footer className="footer-section">
       <div className="container footer-container">
-        <div className="footer-left">
-          <p>© 2026 Paper Airplanes Showcase • Women in Tech</p>
-        </div>
+        <p className="footer-left">
+          © 2026 Paper Airplanes Showcase · Women in Tech
+        </p>
 
-        <div className="footer-right">
+        <nav className="footer-right" aria-label="Footer">
           <Link to="/projects">Browse Projects</Link>
-          <Link to="/signup">Share a Project</Link>
-          <Link to="/login">Sign In</Link>
-        </div>
+          <Link to="/projects/new">Share a Project</Link>
+          <Link to="/login">Log in</Link>
+        </nav>
       </div>
     </footer>
   );

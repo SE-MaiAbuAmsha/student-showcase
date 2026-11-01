@@ -33,7 +33,10 @@
 .footer-right a:hover {
   opacity: 1;
 }
-
+.footer-left {
+  margin: 0;
+  opacity: 0.8;
+}
 @media (max-width: 600px) {
   .footer-container {
     flex-direction: column;
