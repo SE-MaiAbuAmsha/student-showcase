@@ -1,11 +1,10 @@
-.dashboard-page {
+.profile-page {
   background-color: var(--cream-soft);
   min-height: 100vh;
   font-family: var(--font-body);
 }
 
-/* الهيدر */
-.dashboard-header {
+.profile-header {
   background-color: var(--navy);
   color: white;
   display: flex;
@@ -14,7 +13,7 @@
   padding: 20px 50px;
 }
 
-.dashboard-header h2 {
+.profile-header h2 {
   margin: 0;
   font-family: var(--font-heading);
 }
@@ -22,10 +21,10 @@
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
-.profile-btn, .logout-btn {
+.logout-btn {
   background: transparent;
   border: none;
   color: var(--cream);
@@ -38,18 +37,16 @@
   transition: background 0.2s;
 }
 
-.profile-btn:hover, .logout-btn:hover {
+ .logout-btn:hover {
   background: rgba(255,255,255,0.1);
 }
 
-/* محتوى الداشبورد */
-.dashboard-content {
+.profile-content {
   max-width: 1000px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-/* الترحيب وكف اليد */
 .welcome-banner {
   background-color: var(--cream);
   padding: 30px;
@@ -73,7 +70,6 @@
   transform-origin: 70% 70%;
 }
 
-/* باقي التنسيقات زي ما هي (الإحصائيات، المشاريع، والأزرار) */
 .stats-container {
   display: flex;
   gap: 20px;
@@ -144,7 +140,6 @@
 .delete-btn { background: #fee2e2; color: #b91c1c; }
 .delete-btn:hover { background: #fecaca; }
 
-/* الأنيميشن */
 @keyframes wave-animation {
   0% { transform: rotate( 0.0deg) }
   10% { transform: rotate(14.0deg) }

@@ -50,7 +50,6 @@ export default function SignUp() {
           </div>
 
           <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
-            {/* حقول الاسم والايميل والباسورد */}
             <div className="form-group">
               <label>FULL NAME</label>
               <input type="text" placeholder="Leslie Alexander" />
@@ -132,7 +131,6 @@ export default function SignUp() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   style={{ cursor: "pointer" }}
                 >
-                  {/* أيقونة العين الثانية (تم تصحيحها) */}
                   {showConfirmPassword ? (
                     <svg
                       viewBox="0 0 24 24"

@@ -11,24 +11,36 @@ const DEFAULT_STYLE = { bg: "#E5E7EB", text: "#374151" };
 
 export default function ProjectCard({
   id,
-  category,
   title,
-  author,
   description,
+  category,
+  imageUrl,
   githubUrl,
   demoUrl,
-  image, // <-- ضفنا الصورة هون
+  author,
 }) {
   const colors = CATEGORY_STYLES[category] ?? DEFAULT_STYLE;
 
   return (
-    <div className="project-card">
-      {/* كتلة الصورة */}
+    <article className="project-card">
       <div className="card-image-wrapper">
-        {image ? (
-          <img src={image} alt={title} className="project-image" />
+        {imageUrl ? (
+          <img
+            className="card-image"
+            src={imageUrl}
+            alt={`Preview of ${title}`}
+          />
         ) : (
-          <div className="project-image-placeholder">No Image</div>
+          <div className="mockup-placeholder">
+            <div className="mockup-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div className="mockup-line long"></div>
+            <div className="mockup-line short"></div>
+            <div className="mockup-btn"></div>
+          </div>
         )}
       </div>
 
@@ -61,6 +73,6 @@ export default function ProjectCard({
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

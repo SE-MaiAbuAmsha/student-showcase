@@ -1,0 +1,32 @@
+.search {
+  position: relative;
+  max-width: 560px;
+}
+
+.search__icon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  width: 20px;
+  height: 20px;
+  transform: translateY(-50%);
+  color: #4a5675;
+  pointer-events: none;
+}
+
+.search__input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px 0 48px;
+  border: 1px solid #8d9bc4;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.search__input:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}

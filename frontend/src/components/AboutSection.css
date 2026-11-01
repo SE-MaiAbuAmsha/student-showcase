@@ -1,7 +1,7 @@
 .about-section {
   background-color: var(--cream);
-  padding: 40px 0 80px 0; /* قللنا البادينغ العلوي لأنه ملتصق بالكروت */
-  border-top: 1px solid rgba(0,0,0,0.05); /* خط خفيف يفصل */
+  padding: 40px 0 80px 0; 
+  border-top: 1px solid rgba(0,0,0,0.05);
 }
 
 .about-container {
@@ -18,7 +18,7 @@
 .about-badge {
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--blue); /* استخدمنا اللون الأزرق من الباليتة */
+  color: var(--blue); 
   letter-spacing: 1px;
   display: block;
   margin-bottom: 15px;
@@ -52,7 +52,6 @@
   background-color: var(--navy);
 }
 
-/* للجوال */
 @media (max-width: 768px) {
   .about-container {
     flex-direction: column;

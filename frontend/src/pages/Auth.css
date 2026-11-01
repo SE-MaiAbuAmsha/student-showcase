@@ -8,16 +8,14 @@
   overflow: hidden;
 }
 
-/* الهيدر - عشان نرتب اللوجو على الشمال والأزرار على اليمين */
 .auth-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 22px 100px; /* 40px من فوق وتحت، و 100px من اليمين والشمال */
+  padding: 22px 100px; 
   position: relative;
   z-index: 10;
 }
-/* الأزرار اللي على اليمين (باك وساين أب) */
 .header-actions { 
   display: flex; 
   align-items: center; 
@@ -71,7 +69,7 @@
   width: 100%;
   max-width: 700px; 
   border-radius: 50px;
-  padding: 60px 50px; /* كبرنا الـ padding من فوق وتحت عشان الكارت يبان أطول شوي */
+  padding: 60px 50px; 
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
@@ -94,7 +92,6 @@
 
 .hint { font-size: 0.75rem; color: #888; display: flex; align-items: center; gap: 5px; }
 
-/* زر التسجيل/الدخول */
 .auth-btn {
   background-color: var(--cream-soft); 
   color: var(--navy);
@@ -133,16 +130,11 @@
   .auth-titles h1 { font-size: 1.8rem; }
 }
 .input-with-icon button.icon { background: none; border: none; padding: 0; cursor: pointer; }
-/* تنسيق الصورة */
 .welcome-illustration {
   width: 100%;
-  max-width: 280px; /* حجم مناسب للكارت */
-  margin: 0 auto 20px auto; /* توسيط الصورة ومسافة تحتها */
+  max-width: 280px; 
+  margin: 0 auto 20px auto; 
   display: block;
-  
-  /* ✨ السر هنا: فلتر يحول ألوان الصورة لألوان الباليتة ✨ */
   filter: sepia(1) hue-rotate(180deg) saturate(1.5) brightness(1.1);
-  
-  /* تأثير ناعم عشان ما تكون حادة كثير */
   opacity: 0.9;
 }

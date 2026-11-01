@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import "./Profile.css";
 
-export default function Dashboard() {
+export default function Profile() {
   const [userName] = useState(() => localStorage.getItem("userName"));
   const [showWelcome, setShowWelcome] = useState(true);
 
@@ -19,26 +19,11 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="dashboard-page">
-      <header className="dashboard-header">
+    <div className="profile-page">
+      <header className="profile-header">
         <h2>My Profile</h2>
 
-        <div className="header-actions">
-          <button className="profile-btn" title="Profile">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{ width: "24px", height: "24px" }}
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </button>
-
+        <div className="profile-actions">
           <Link
             to="/"
             className="logout-btn"
@@ -62,7 +47,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <main className="dashboard-content">
+      <main className="profile-content">
         {showWelcome && (
           <div className="welcome-banner">
             <div className="wave-emoji">👋</div>
