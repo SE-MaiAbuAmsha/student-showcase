@@ -1,41 +1,56 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import ConfirmDeleteModal from "../components/ConfirmDeleteModal"; // استدعاء المودال
+import { Navigate, Link } from "react-router-dom";
+import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import "./Profile.css";
 
 export default function Profile() {
-  const [userName] = useState(() => localStorage.getItem("userName"));
+  const [userName] = useState(
+    () => localStorage.getItem("userName") || "Leslie Alexander",
+  );
+
   const [showWelcome, setShowWelcome] = useState(true);
 
-  // State for managing the delete modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
 
-  // Dummy projects data
   const [myProjects, setMyProjects] = useState([
-    { id: 1, title: "Weather Dashboard", category: "Web" },
-    { id: 2, title: "My Portfolio", category: "UI/UX" },
+    {
+      id: 1,
+      title: "Weather Dashboard",
+      category: "Web",
+      description:
+        "A responsive dashboard that shows a five-day forecast with radar map.",
+    },
+    {
+      id: 2,
+      title: "Budget Buddy",
+      category: "UI/UX",
+      description:
+        "A simple app to track daily spending and set monthly limits.",
+    },
   ]);
 
+  // إخفاء رسالة الترحيب بعد 4 ثواني
   useEffect(() => {
     const timer = setTimeout(() => setShowWelcome(false), 4000);
     return () => clearTimeout(timer);
   }, []);
 
+  // حماية الصفحة
   if (!userName) return <Navigate to="/login" replace />;
 
-  // Function to open the modal and store the project to delete
   const handleDeleteClick = (project) => {
     setProjectToDelete(project);
     setIsModalOpen(true);
   };
 
-  // Function to actually delete the project
   const handleConfirmDelete = () => {
     setMyProjects(myProjects.filter((p) => p.id !== projectToDelete.id));
     setIsModalOpen(false);
     setProjectToDelete(null);
   };
+
+  const initials = userName.substring(0, 2).toUpperCase();
 
   return (
     <div className="profile-page">
@@ -47,35 +62,64 @@ export default function Profile() {
           </div>
         )}
 
-        <div className="stats-container">
-          <div className="stat-card">
-            <h3>Total Projects</h3>
-            <p className="stat-number">{myProjects.length}</p>
+        <div className="profile-header-card">
+          <div className="profile-info">
+            <div className="profile-avatar">{initials}</div>
+            <div className="profile-details">
+              <h1>{userName}</h1>
+              <p>✉️ {userName.toLowerCase().replace(" ", ".")}@example.com</p>
+            </div>
           </div>
         </div>
 
+        {/* قسم المشاريع */}
         <div className="projects-section">
           <div className="section-header">
-            <h2>My Projects</h2>
-            <button className="add-project-btn">+ Add New Project</button>
+            <h2>
+              My Projects{" "}
+              <span className="project-count">
+                ({myProjects.length} projects)
+              </span>
+            </h2>
+            <Link to="/share-project" className="add-project-btn">
+              + Add New Project
+            </Link>
           </div>
 
-          <div className="projects-list">
+          <div className="profile-projects-grid">
             {myProjects.map((project) => (
-              <div key={project.id} className="project-item">
-                <div>
-                  <h3>{project.title}</h3>
-                  <span className="category">{project.category}</span>
-                </div>
-                <div className="actions">
-                  <button className="edit-btn">Edit</button>
-                  {/* هنا بنستدعي دالة فتح المودال */}
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDeleteClick(project)}
+              <div key={project.id} className="simple-project-card">
+                <div className="simple-card-header">
+                  <span
+                    className={`simple-badge ${project.category.toLowerCase()}`}
                   >
-                    Delete
-                  </button>
+                    {project.category}
+                  </span>
+                </div>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+
+                <div className="simple-card-footer">
+                  <div className="card-actions">
+                    <Link
+                      to={`/edit-project/${project.id}`}
+                      className="action-btn edit"
+                    >
+                      ✎ Edit
+                    </Link>{" "}
+                    <button
+                      className="action-btn delete"
+                      onClick={() => handleDeleteClick(project)}
+                    >
+                      🗑 Delete
+                    </button>
+                  </div>
+                  <Link
+                    to={`/projects/${project.id}`}
+                    className="view-project-link"
+                  >
+                    View Project →
+                  </Link>
                 </div>
               </div>
             ))}
@@ -83,7 +127,6 @@ export default function Profile() {
         </div>
       </main>
 
-      {/* المودال بيتحط برا الـ main عشان يطلع فوق كل حاجة */}
       <ConfirmDeleteModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

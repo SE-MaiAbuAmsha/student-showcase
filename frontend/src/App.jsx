@@ -8,6 +8,7 @@ import Projects from "./pages/Projects";
 import ProjectDetails from "./pages/ProjectDetails";
 import NotFound from "./pages/NotFound";
 import ShareProject from "./pages/ShareProject";
+import EditProject from "./pages/EditProject";
 function App() {
   return (
     <Router>
@@ -21,8 +22,7 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:id" element={<ProjectDetails />} />
           <Route path="/share-project" element={<ShareProject />} />
-          <Route path="/edit-project/:id" element={<ShareProject />} />
-
+          <Route path="/edit-project/:id" element={<EditProject />} />
           {/* Moved Profile here so it gets the global Navbar and Footer */}
           <Route path="/profile" element={<Profile />} />
 
