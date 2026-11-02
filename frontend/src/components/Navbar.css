@@ -56,3 +56,28 @@
   outline: 2px solid var(--cream);
   outline-offset: 4px;
 }
+.nav-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  color: #ffffff; 
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none; 
+  padding: 0;
+}
+
+.nav-icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-icon-btn svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}

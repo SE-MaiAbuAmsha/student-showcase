@@ -12,16 +12,28 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* 
+          Routes wrapped in <Layout /> will include the Navbar and Footer.
+          These are the main pages of the application.
+        */}
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:id" element={<ProjectDetails />} />
+
+          {/* Moved Profile here so it gets the global Navbar and Footer */}
+          <Route path="/profile" element={<Profile />} />
+
           <Route path="*" element={<NotFound />} />
         </Route>
 
+        {/* 
+          Auth pages (Login & Signup) are OUTSIDE the Layout.
+          This is because they have their own custom header (Logo + Back button) 
+          and shouldn't show the main Navbar or Footer.
+        */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
