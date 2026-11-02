@@ -12,9 +12,7 @@
   z-index: 100;
   border-bottom: 1px solid rgba(252, 241, 208, 0.12);
 }
-.navbar__brand{
-  text-decoration: none;
-}
+
 .navbar__links {
   display: flex;
   align-items: center;

@@ -5,9 +5,7 @@ import "./Navbar.css";
 function Navbar() {
   return (
     <header className="navbar">
-      <Link to="/" className="navbar__brand" aria-label="Women in Tech, home">
-        <Logo />
-      </Link>
+      <Logo />
 
       <nav className="navbar__links">
         <Link to="/projects" className="nav-link">
