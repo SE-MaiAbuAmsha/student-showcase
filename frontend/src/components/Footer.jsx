@@ -11,7 +11,7 @@ export default function Footer() {
 
         <nav className="footer-right" aria-label="Footer">
           <Link to="/projects">Browse Projects</Link>
-          <Link to="/projects/new">Share a Project</Link>
+          <Link to="/share-project">Share a Project</Link>{" "}
           <Link to="/login">Log in</Link>
         </nav>
       </div>

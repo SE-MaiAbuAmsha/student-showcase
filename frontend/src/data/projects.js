@@ -1,4 +1,11 @@
+import weatherImg from "../assets/projects/weather-dashboard.jpeg";
+import budgetImg from "../assets/projects/budget-buddy.jpeg";
+import quizImg from "../assets/projects/student-quiz-bot.jpeg";
+
 export const CATEGORIES = ["Web", "UI/UX", "AI", "Data"];
+
+// TEMP: until the API exists, the logged-in student is treated as "Sara"
+export const MOCK_CURRENT_AUTHOR = "Sara";
 
 export const SAMPLE_PROJECTS = [
   {
@@ -7,7 +14,7 @@ export const SAMPLE_PROJECTS = [
     description:
       "A responsive dashboard that shows a five-day forecast for any city with live radar overlay.",
     category: "Web",
-    imageUrl: "frontend/src/assets/projects/weather-dashboard.jpeg",
+    imageUrl: weatherImg,
     githubUrl: "https://github.com",
     demoUrl: "https://example.com",
     author: "Sara",
@@ -18,7 +25,7 @@ export const SAMPLE_PROJECTS = [
     description:
       "A simple app to track daily spending, visualize recurring expenses, and set monthly limits.",
     category: "UI/UX",
-    imageUrl: "",
+    imageUrl: budgetImg,
     githubUrl: "https://github.com",
     demoUrl: "",
     author: "Lina",
@@ -29,53 +36,52 @@ export const SAMPLE_PROJECTS = [
     description:
       "A conversational bot that converts raw lecture notes into interactive flashcards and practice questions.",
     category: "AI",
-    imageUrl: "",
+    imageUrl: quizImg,
     githubUrl: "https://github.com",
     demoUrl: "https://example.com",
     author: "Noor",
   },
   {
     id: 4,
-    title: "Study Quiz Bot",
+    title: "Library Manager",
     description:
-      "A conversational bot that converts raw lecture notes into interactive flashcards and practice questions.",
-    category: "AI",
+      "Catalogue, borrowing workflows, and return tracking built for community and school libraries.",
+    category: "Web",
     imageUrl: "",
     githubUrl: "https://github.com",
-    demoUrl: "https://example.com",
-    author: "Noor",
+    demoUrl: "",
+    author: "Huda",
   },
   {
     id: 5,
-    title: "Budget Buddy",
+    title: "Sales Insights",
     description:
-      "A simple app to track daily spending, visualize recurring expenses, and set monthly limits.",
+      "Charts and summaries built from a year of anonymous sales data.",
+    category: "Data",
+    imageUrl: "",
+    githubUrl: "https://github.com",
+    demoUrl: "https://example.com",
+    author: "Dana",
+  },
+  {
+    id: 6,
+    title: "Portfolio Redesign",
+    description:
+      "A case study redesigning a personal portfolio for clarity and accessibility.",
     category: "UI/UX",
     imageUrl: "",
     githubUrl: "https://github.com",
     demoUrl: "",
-    author: "Lina",
-  },
-  {
-    id: 6,
-    title: "Weather Dashboard",
-    description:
-      "A responsive dashboard that shows a five-day forecast for any city with live radar overlay.",
-    category: "Web",
-    imageUrl: "frontend/src/assets/projects/weather-dashboard.jpeg",
-    githubUrl: "https://github.com",
-    demoUrl: "https://example.com",
     author: "Sara",
   },
   {
     id: 7,
-    title: "Weather Dashboard",
-    description:
-      "A responsive dashboard that shows a five-day forecast for any city with live radar overlay.",
-    category: "Web",
-    imageUrl: "frontend/src/assets/projects/weather-dashboard.jpeg",
+    title: "Plant Care Reminder",
+    description: "Watering reminders and care tips for houseplants.",
+    category: "UI/UX",
+    imageUrl: "",
     githubUrl: "https://github.com",
-    demoUrl: "https://example.com",
-    author: "Sara",
+    demoUrl: "",
+    author: "Maya",
   },
 ];
