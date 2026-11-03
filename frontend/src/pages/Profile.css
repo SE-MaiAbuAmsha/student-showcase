@@ -9,7 +9,6 @@
   margin: 0 auto;
 }
 
-/* رسالة الترحيب */
 .welcome-banner {
   background-color: #fff;
   padding: 20px;
@@ -159,7 +158,6 @@
   flex-grow: 1;
 }
 
-/* فوتر الكارت (أزرار التحكم والرابط) */
 .simple-card-footer {
   display: flex;
   justify-content: space-between;

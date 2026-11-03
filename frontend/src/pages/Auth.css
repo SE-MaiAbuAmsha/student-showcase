@@ -1,4 +1,3 @@
-/* الخلفية والطيارات */
 .auth-page {
   background-color: var(--navy);
   min-height: 100vh;
@@ -53,7 +52,6 @@
   background-color: #fff; 
 }
 
-/* الكارت */
 .auth-container {
   flex: 1;
   display: flex;
