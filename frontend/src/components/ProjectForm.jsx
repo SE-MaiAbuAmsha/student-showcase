@@ -2,7 +2,12 @@ import { useState } from "react";
 import ProjectCard from "./ProjectCard";
 import "./ProjectForm.css";
 
-export default function ProjectForm({ initialData = null, onSave, onCancel }) {
+export default function ProjectForm({
+  initialData = null,
+  onSave,
+  onCancel,
+  onDelete,
+}) {
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
     category: initialData?.category || "Web",
@@ -110,6 +115,7 @@ export default function ProjectForm({ initialData = null, onSave, onCancel }) {
                   value={formData.githubUrl}
                   onChange={handleChange}
                   placeholder="https://github.com/..."
+                  required
                 />
               </div>
             </div>
@@ -154,7 +160,11 @@ export default function ProjectForm({ initialData = null, onSave, onCancel }) {
               Cancel
             </button>
             {initialData && (
-              <button type="button" className="delete-text-btn">
+              <button
+                type="button"
+                className="delete-text-btn"
+                onClick={onDelete}
+              >
                 🗑 Delete Project
               </button>
             )}
@@ -166,7 +176,6 @@ export default function ProjectForm({ initialData = null, onSave, onCancel }) {
       <div className="preview-container">
         <div className="preview-header">
           <span>👁 LIVE CARD PREVIEW</span>
-          <span>Browse Directory Sync</span>
         </div>
         <ProjectCard
           title={formData.title || "Project Title"}

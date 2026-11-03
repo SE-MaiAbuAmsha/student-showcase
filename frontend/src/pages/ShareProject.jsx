@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProjectForm from "../components/ProjectForm";
 import "./ShareProject.css";
 
@@ -13,7 +13,7 @@ export default function ShareProject() {
   return (
     <div className="share-project-page">
       <div className="share-project-header">
-        <button onClick={() => navigate(-1)} className="back-btn">
+        <Link to="/projects" className="back-btn">
           <svg
             width="20"
             height="20"
@@ -24,12 +24,13 @@ export default function ShareProject() {
             strokeLinecap="round"
             strokeLinejoin="round"
             style={{ marginRight: "8px" }}
+            aria-hidden="true"
           >
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
           All projects
-        </button>
+        </Link>
         <h1>Share a project</h1>
         <p>Tell visitors what you built and where they can see it.</p>
       </div>

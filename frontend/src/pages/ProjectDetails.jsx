@@ -1,11 +1,16 @@
-import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import CategoryBadge from "../components/CategoryBadge";
+import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import ProjectImage from "../components/ProjectImage";
-import { SAMPLE_PROJECTS } from "../data/projects";
+import { MOCK_CURRENT_AUTHOR, SAMPLE_PROJECTS } from "../data/projects";
 import "./ProjectDetails.css";
 
 function ProjectDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const project = SAMPLE_PROJECTS.find((p) => p.id === Number(id));
 
   if (!project) {
@@ -28,8 +33,14 @@ function ProjectDetails() {
   const { title, description, category, imageUrl, githubUrl, demoUrl, author } =
     project;
 
-  // TEMP: will come from the logged-in user later
-  const isOwner = true;
+  const isLoggedIn = Boolean(localStorage.getItem("userName"));
+  const isOwner = isLoggedIn && author === MOCK_CURRENT_AUTHOR;
+
+  const handleConfirmDelete = () => {
+    // TODO: call the API (DELETE) when the back end exists
+    setIsModalOpen(false);
+    navigate("/profile");
+  };
 
   return (
     <div className="container details">
@@ -49,18 +60,13 @@ function ProjectDetails() {
 
           {isOwner && (
             <div className="details__owner">
-              <Link
-                to={`/projects/${project.id}/edit`}
-                className="details__btn"
-              >
+              <Link to={`/edit-project/${project.id}`} className="details__btn">
                 Edit
               </Link>
               <button
                 type="button"
                 className="details__btn details__btn--danger"
-                onClick={() => {
-                  // TODO: open ConfirmDeleteModal (step 7)
-                }}
+                onClick={() => setIsModalOpen(true)}
               >
                 Delete
               </button>
@@ -96,6 +102,13 @@ function ProjectDetails() {
           </a>
         </div>
       </article>
+
+      <ConfirmDeleteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirmDelete}
+        projectTitle={title}
+      />
     </div>
   );
 }

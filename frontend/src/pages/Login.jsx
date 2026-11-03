@@ -15,6 +15,7 @@ export default function Login() {
     e.preventDefault();
     const name = email.split("@")[0];
     localStorage.setItem("userName", name);
+    localStorage.setItem("userEmail", email);
     navigate("/profile");
   };
 
