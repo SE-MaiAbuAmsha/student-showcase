@@ -1,4 +1,3 @@
-`````markdown
 # Women in Tech · Student Showcase
 
 A web platform where students of the Paper Airplanes _Women in Tech_ program publish their projects, and visitors can browse them by category.
@@ -80,7 +79,8 @@ Errors return `{"error": "message"}` with a suitable HTTP status code.
 
 ## Project structure
 ```
-`````
+
+````
 
 student-showcase/
 frontend/
@@ -117,4 +117,4 @@ database/ schema.sql (in progress)
 ## Credits
 
 Built as the final project of the Web Development 2 course in the Paper Airplanes _Women in Tech_ program. Project names, authors and descriptions in the sample data are fictional.
-```
+````
