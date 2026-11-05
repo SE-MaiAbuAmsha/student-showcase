@@ -1,3 +1,4 @@
+`````markdown
 # Women in Tech · Student Showcase
 
 A web platform where students of the Paper Airplanes _Women in Tech_ program publish their projects, and visitors can browse them by category.
@@ -26,7 +27,7 @@ A web platform where students of the Paper Airplanes _Women in Tech_ program pub
 
 Requirements: Node.js 20 or newer.
 
-````bash
+```bash
 cd frontend
 npm install
 npm run dev
@@ -52,7 +53,7 @@ Open the address printed in the terminal (usually `http://localhost:5173`).
 | `/edit-project/:id` | Owner | Edit or delete a project |
 
 ## User flow
-![User Flow Diagram](https://github.com/SE-MaiAbuAmsha/student-showcase/blob/main/student_showcase_flow_visitor_read_only.png)
+![User Flow Diagram](https://raw.githubusercontent.com/SE-MaiAbuAmsha/student-showcase/main/student_showcase_flow_visitor_read_only.png)
 
 
 ## Data model (planned)
@@ -78,17 +79,19 @@ Open the address printed in the terminal (usually `http://localhost:5173`).
 Errors return `{"error": "message"}` with a suitable HTTP status code.
 
 ## Project structure
-
 ```
+`````
+
 student-showcase/
-  frontend/
-    src/
-      components/   Navbar, Footer, Layout, Hero, PlaneField, ProjectCard, ProjectForm, ...
-      pages/        Home, Projects, ProjectDetails, Profile, ShareProject, EditProject, Login, SignUp
-      data/         sample projects and categories
-      assets/       project images
-  api/              PHP endpoints (in progress)
-  database/         schema.sql (in progress)
+frontend/
+src/
+components/ Navbar, Footer, Layout, Hero, PlaneField, ProjectCard, ProjectForm, ...
+pages/ Home, Projects, ProjectDetails, Profile, ShareProject, EditProject, Login, SignUp
+data/ sample projects and categories
+assets/ project images
+api/ PHP endpoints (in progress)
+database/ schema.sql (in progress)
+
 ```
 
 ## Design notes
@@ -114,4 +117,4 @@ student-showcase/
 ## Credits
 
 Built as the final project of the Web Development 2 course in the Paper Airplanes _Women in Tech_ program. Project names, authors and descriptions in the sample data are fictional.
-````
+```
