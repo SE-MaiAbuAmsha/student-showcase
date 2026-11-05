@@ -79,8 +79,6 @@ Errors return `{"error": "message"}` with a suitable HTTP status code.
 ## Project structure
 ```
 
-````
-
 student-showcase/
 frontend/
 src/
@@ -90,7 +88,7 @@ data/ sample projects and categories
 assets/ project images
 api/ PHP endpoints (in progress)
 database/ schema.sql (in progress)
-
+````
 
 ## Design notes
 
