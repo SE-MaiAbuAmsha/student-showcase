@@ -1,38 +1,35 @@
 # Women in Tech · Student Showcase
 
-A web platform where students of the Paper Airplanes *Women in Tech* program publish their projects, and visitors can browse them by category.
+A web platform where students of the Paper Airplanes _Women in Tech_ program publish their projects, and visitors can browse them by category.
 
-> **Status:** the front end is complete and runs on sample data. The PHP API and the MySQL database are in progress.
+> **Status:** The front-end is complete and runs on sample data. The PHP API and MySQL database are in progress.
 
-## Features (MVP)
+## MVP Features
 
-- Browse projects with a title search and a category filter (Web, UI/UX, AI, Data)
-- Project details page with links to the code and the live demo
-- Sign up, log in and log out
-- Students publish, edit and delete **their own** projects (delete asks for confirmation)
-- Profile page listing the student's projects
-- Responsive layout, keyboard-friendly controls, and reduced-motion support for the animated planes
+- **For Visitors:** Browse all projects, search, filter by category, and view project details without needing an account.
+- **For Students:** Sign up, log in, and publish/edit/delete **their own** projects.
+- Profile page to manage the student's projects.
+- Responsive layout, keyboard-friendly controls, and reduced-motion support for the animated planes.
 
-## Tech stack
+## Tech Stack
 
-| Layer | Technology |
-| --- | --- |
-| Front end | React 19 (Vite), React Router |
-| Back end (in progress) | PHP 8 with PDO, JSON API |
-| Database (in progress) | MySQL |
-| Fonts | Fraunces and DM Sans (via `@fontsource`) |
+| Layer              | Technology                               |
+| ------------------ | ---------------------------------------- |
+| Front end          | React 19 (Vite), React Router            |
+| Back end (planned) | PHP 8 with PDO, JSON API                 |
+| Database (planned) | MySQL                                    |
+| Fonts              | Fraunces and DM Sans (via `@fontsource`) |
 
-## Getting started
+## Getting Started
 
 ### Front end
 
 Requirements: Node.js 20 or newer.
 
-```bash
+````bash
 cd frontend
 npm install
 npm run dev
-```
 
 Open the address printed in the terminal (usually `http://localhost:5173`).
 
@@ -49,21 +46,20 @@ Open the address printed in the terminal (usually `http://localhost:5173`).
 | `/` | Everyone | Home: hero, featured projects, about |
 | `/projects` | Everyone | Browse with search and filter |
 | `/projects/:id` | Everyone | Project details |
-| `/login`, `/signup` | Visitors | Authentication |
+| `/login`, `/signup` | Guests | Authentication |
 | `/profile` | Logged in | My projects |
 | `/share-project` | Logged in | Publish a project |
 | `/edit-project/:id` | Owner | Edit or delete a project |
 
 ## User flow
 
-```mermaid
 flowchart TD
-    A(["Visitor opens the site"]) --> B["Browse projects"]
+    A(["Visitor opens the site"]) --> B["Browse projects (No login required)"]
     B --> C["Search and filter by category"]
     C --> D{"Any results?"}
     D -- No --> E["Empty state with Clear filters"]
     E --> B
-    D -- Yes --> F["Project details"]
+    D -- Yes --> F["View project details"]
     F --> G{"Wants to publish?"}
     G -- No --> B
     G -- Yes --> H{"Logged in?"}
@@ -85,27 +81,26 @@ flowchart TD
     R --> L
     L --> S["Log out"]
     S --> B
-```
 
 ## Data model (planned)
 
-| Table | Columns |
-| --- | --- |
-| `users` | id, name, email (unique), password_hash, created_at |
-| `categories` | id, name (unique) |
-| `projects` | id, user_id, category_id, title, description, image_url, github_url, demo_url, created_at |
+| Table        | Columns                                                                                   |
+| ------------ | ----------------------------------------------------------------------------------------- |
+| `users`      | id, name, email (unique), password_hash, created_at                                       |
+| `categories` | id, name (unique)                                                                         |
+| `projects`   | id, user_id, category_id, title, description, image_url, github_url, demo_url, created_at |
 
 ## API (planned)
 
-| Method | Endpoint | Auth | Purpose |
-| --- | --- | --- | --- |
-| POST | `register.php` | No | Create an account |
-| POST | `login.php` | No | Log in |
-| POST | `logout.php` | Yes | Log out |
-| GET | `projects.php?category=&q=` | No | List with filter and search |
-| POST | `projects.php` | Yes | Publish a project |
-| GET | `project.php?id=` | No | One project |
-| PUT / DELETE | `project.php?id=` | Owner | Edit or delete |
+| Method       | Endpoint                    | Auth  | Purpose                     |
+| ------------ | --------------------------- | ----- | --------------------------- |
+| POST         | `register.php`              | No    | Create an account           |
+| POST         | `login.php`                 | No    | Log in                      |
+| POST         | `logout.php`                | Yes   | Log out                     |
+| GET          | `projects.php?category=&q=` | No    | List with filter and search |
+| POST         | `projects.php`              | Yes   | Publish a project           |
+| GET          | `project.php?id=`           | No    | One project                 |
+| PUT / DELETE | `project.php?id=`           | Owner | Edit or delete              |
 
 Errors return `{"error": "message"}` with a suitable HTTP status code.
 
@@ -127,8 +122,6 @@ student-showcase/
 
 - Palette: navy `#0D1C42`, blue `#22396F`, cream `#FCF1D0`, ink `#010736`.
 - The logo is an original mark (a folded W with a small paper airplane) made for this project. It is not the official Paper Airplanes logo.
-- The animated planes use CSS only, and stop when the user prefers reduced motion.
-
 
 ## Known limitations
 
@@ -147,4 +140,4 @@ student-showcase/
 
 ## Credits
 
-Built as the final project of the Web Development 2 course in the Paper Airplanes *Women in Tech* program. Project names, authors and descriptions in the sample data are fictional.
+Built as the final project of the Web Development 2 course in the Paper Airplanes _Women in Tech_ program. Project names, authors and descriptions in the sample data are fictional.
