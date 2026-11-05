@@ -1,0 +1,40 @@
+.backlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px 0 12px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.backlink svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.backlink--dark {
+  color: var(--navy);
+}
+
+.backlink--dark:hover {
+  background: rgba(13, 28, 66, 0.08);
+}
+
+.backlink--light {
+  color: var(--cream);
+}
+
+.backlink--light:hover {
+  background: rgba(252, 241, 208, 0.12);
+}
+
+.backlink:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}

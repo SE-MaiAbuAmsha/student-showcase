@@ -4,26 +4,7 @@ import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import ProjectForm from "../components/ProjectForm";
 import { MOCK_CURRENT_AUTHOR, SAMPLE_PROJECTS } from "../data/projects";
 import "./ShareProject.css";
-
-function BackArrow() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      style={{ marginRight: "8px" }}
-      aria-hidden="true"
-    >
-      <line x1="19" y1="12" x2="5" y2="12"></line>
-      <polyline points="12 19 5 12 12 5"></polyline>
-    </svg>
-  );
-}
+import BackLink from "../components/BackLink";
 
 export default function EditProject() {
   const { id } = useParams();
@@ -37,10 +18,7 @@ export default function EditProject() {
     return (
       <div className="share-project-page">
         <div className="share-project-header">
-          <Link to="/profile" className="back-btn">
-            <BackArrow />
-            Back to My Profile
-          </Link>
+          <BackLink to="/profile">Back to My Profile</BackLink>
           <h1>Project not found</h1>
           <p>You can only edit your own projects.</p>
         </div>
@@ -63,10 +41,7 @@ export default function EditProject() {
   return (
     <div className="share-project-page">
       <div className="share-project-header">
-        <Link to="/profile" className="back-btn">
-          <BackArrow />
-          Back to My Profile
-        </Link>
+        <BackLink to="/profile">Back to My Profile</BackLink>
         <h1>Edit Project</h1>
         <p>Update your details, external repositories, and preview banner.</p>
       </div>

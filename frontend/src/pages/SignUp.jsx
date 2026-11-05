@@ -5,6 +5,7 @@ import "./Auth.css";
 import Logo from "../components/Logo";
 import Footer from "../components/Footer";
 import welcomeGirl from "../assets/projects/welcome-girl.jpg";
+import BackLink from "../components/BackLink";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,23 +19,9 @@ export default function SignUp() {
       <header className="auth-header">
         <Logo />
 
-        <Link to="/" className="back-link">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{ marginRight: "8px" }}
-          >
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-          </svg>
+        <BackLink to="/" variant="light">
           Back
-        </Link>
+        </BackLink>
       </header>
 
       <div className="auth-container">

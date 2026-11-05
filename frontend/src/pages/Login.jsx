@@ -4,6 +4,7 @@ import PlaneField from "../components/PlaneField";
 import Logo from "../components/Logo";
 import "./Auth.css";
 import Footer from "../components/Footer";
+import BackLink from "../components/BackLink";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -27,9 +28,9 @@ export default function Login() {
         <Logo />
 
         <div className="header-actions">
-          <Link to="/" className="back-link">
-            ← Back
-          </Link>
+          <BackLink to="/" variant="light">
+            Back
+          </BackLink>
           <Link to="/signup" className="nav-btn">
             Sign Up
           </Link>{" "}

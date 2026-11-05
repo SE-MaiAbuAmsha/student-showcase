@@ -5,6 +5,7 @@ import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import ProjectImage from "../components/ProjectImage";
 import { MOCK_CURRENT_AUTHOR, SAMPLE_PROJECTS } from "../data/projects";
 import "./ProjectDetails.css";
+import BackLink from "../components/BackLink";
 
 function ProjectDetails() {
   const { id } = useParams();
@@ -16,9 +17,7 @@ function ProjectDetails() {
   if (!project) {
     return (
       <div className="container details">
-        <Link to="/projects" className="details__back">
-          ← Back to Projects
-        </Link>
+        <BackLink to="/projects">Back to Projects</BackLink>
         <div className="details__missing">
           <h1 className="details__title">Project not found</h1>
           <p>This project doesn't exist or was removed.</p>
@@ -44,9 +43,7 @@ function ProjectDetails() {
 
   return (
     <div className="container details">
-      <Link to="/projects" className="details__back">
-        ← Back to Projects
-      </Link>
+      <BackLink to="/projects">Back to Projects</BackLink>
 
       <article className="details__card">
         <header className="details__header">
