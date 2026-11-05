@@ -30,7 +30,7 @@ cd frontend
 npm install
 npm run dev
 
-Open the address printed in the terminal (usually `http://localhost:5173`).
+(Link: `http://localhost:5173`).
 
 ### Back end (coming soon)
 
