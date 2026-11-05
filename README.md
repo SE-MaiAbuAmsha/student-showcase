@@ -52,35 +52,10 @@ Open the address printed in the terminal (usually `http://localhost:5173`).
 | `/edit-project/:id` | Owner | Edit or delete a project |
 
 ## User flow
+## User Flow
 
-flowchart TD
-    A(["Visitor opens the site"]) --> B["Browse projects (No login required)"]
-    B --> C["Search and filter by category"]
-    C --> D{"Any results?"}
-    D -- No --> E["Empty state with Clear filters"]
-    E --> B
-    D -- Yes --> F["View project details"]
-    F --> G{"Wants to publish?"}
-    G -- No --> B
-    G -- Yes --> H{"Logged in?"}
-    H -- No --> I["Sign up or log in"]
-    I --> J{"Valid data?"}
-    J -- No --> K["Field errors under the inputs"]
-    K --> I
-    J -- Yes --> L["Profile: my projects"]
-    H -- Yes --> L
-    L --> M["Add or edit project form"]
-    M --> N{"Valid data?"}
-    N -- No --> O["Field errors under the inputs"]
-    O --> M
-    N -- Yes --> P["Project saved"]
-    P --> L
-    L --> Q{"Confirm delete?"}
-    Q -- Cancel --> L
-    Q -- Confirm --> R["Project removed"]
-    R --> L
-    L --> S["Log out"]
-    S --> B
+![User Flow Diagram](student_showcase_flow_visitor_read_only.png)
+
 
 ## Data model (planned)
 
@@ -141,3 +116,4 @@ student-showcase/
 ## Credits
 
 Built as the final project of the Web Development 2 course in the Paper Airplanes _Women in Tech_ program. Project names, authors and descriptions in the sample data are fictional.
+````
