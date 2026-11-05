@@ -26,7 +26,6 @@ A web platform where students of the Paper Airplanes _Women in Tech_ program pub
 
 Requirements: Node.js 20 or newer.
 
-```bash
 cd frontend
 npm install
 npm run dev
@@ -92,7 +91,6 @@ assets/ project images
 api/ PHP endpoints (in progress)
 database/ schema.sql (in progress)
 
-```
 
 ## Design notes
 
