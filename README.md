@@ -52,9 +52,7 @@ Open the address printed in the terminal (usually `http://localhost:5173`).
 | `/edit-project/:id` | Owner | Edit or delete a project |
 
 ## User flow
-## User Flow
-
-![User Flow Diagram](student_showcase_flow_visitor_read_only.png)
+![User Flow Diagram](./student_showcase_flow_visitor_read_only.png)
 
 
 ## Data model (planned)
