@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import "./Footer.css";
 
 export default function Footer() {
+  const isLoggedIn = Boolean(localStorage.getItem("userName"));
+
   return (
     <footer className="footer-section">
       <div className="container footer-container">
@@ -11,8 +13,11 @@ export default function Footer() {
 
         <nav className="footer-right" aria-label="Footer">
           <Link to="/projects">Browse Projects</Link>
-          <Link to="/share-project">Share a Project</Link>{" "}
-          <Link to="/login">Log in</Link>
+          {isLoggedIn ? (
+            <Link to="/share-project">Share a Project</Link>
+          ) : (
+            <Link to="/login">Log in</Link>
+          )}
         </nav>
       </div>
     </footer>
