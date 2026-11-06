@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PlaneField from "../components/PlaneField";
 import "./Auth.css";
 import Logo from "../components/Logo";
@@ -8,10 +8,58 @@ import welcomeGirl from "../assets/projects/welcome-girl.jpg";
 import BackLink from "../components/BackLink";
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreed, setAgreed] = useState(false);
 
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(""); // تصفير الأخطاء القديمة
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
+
+    const userData = {
+      name: fullName,
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response = await fetch("http://localhost/api/register.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        navigate("/login");
+      } else {
+        setError(data.error || "Registration failed.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Failed to connect to the server.");
+    }
+  };
   return (
     <div className="auth-page">
       <PlaneField />
@@ -36,10 +84,16 @@ export default function SignUp() {
             <p>Create an account to publish and manage your projects.</p>
           </div>
 
-          <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+          <form className="auth-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label>FULL NAME</label>
-              <input type="text" placeholder="Leslie Alexander" />
+              <input
+                type="text"
+                placeholder="Leslie Alexander"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
             </div>
 
             <div className="form-group">
@@ -48,6 +102,9 @@ export default function SignUp() {
                 <input
                   type="email"
                   placeholder="leslie.alexander@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
                 <svg
                   className="icon"
@@ -70,6 +127,9 @@ export default function SignUp() {
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
                 <div
                   className="icon"
@@ -112,6 +172,9 @@ export default function SignUp() {
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="••••••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
                 />
                 <div
                   className="icon"
@@ -146,6 +209,9 @@ export default function SignUp() {
                 </div>
               </div>
             </div>
+            {error && (
+              <p style={{ color: "red", fontSize: "0.9rem" }}>{error}</p>
+            )}
 
             <div className="checkbox-group">
               <input
