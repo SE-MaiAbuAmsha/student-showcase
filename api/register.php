@@ -1,57 +1,54 @@
 <?php
-// register.php
+// register.php: create a student account.
 require_once 'db.php';
 
-// 1. Check if the request is POST
+// Only POST is accepted.
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(["error" => "Method not allowed. Please use POST."]);
-    exit();
+    respond(405, ['error' => 'Method not allowed. Please use POST.']);
 }
 
-// 2. Get the data sent from React (JSON format)
-$data = json_decode(file_get_contents("php://input"));
+// CHANGED: read the JSON body as an array. A missing field becomes an empty string.
+$data     = json_decode(file_get_contents('php://input'), true);
+$name     = trim((string)($data['name'] ?? ''));
+$email    = strtolower(trim((string)($data['email'] ?? '')));
+$password = (string)($data['password'] ?? '');
 
-// 3. Check if all required fields are present
-if (empty($data->name) || empty($data->email) || empty($data->password)) {
-    http_response_code(400);
-    echo json_encode(["error" => "Please fill all required fields (name, email, password)."]);
-    exit();
+// CHANGED: validate on the server too, because the browser checks can be bypassed
+if ($name === '' || $email === '' || $password === '') {
+    respond(400, ['error' => 'Please fill all required fields (name, email, password).']);
+}
+if (mb_strlen($name) < 2 || mb_strlen($name) > 100) {
+    respond(400, ['error' => 'Name must be between 2 and 100 characters.']);
+}
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 255) {
+    respond(400, ['error' => 'Please enter a valid email address.']);
+}
+if (strlen($password) < 8 || strlen($password) > 72) { // bcrypt only reads 72 bytes
+    respond(400, ['error' => 'Password must be between 8 and 72 characters.']);
 }
 
-$name = trim($data->name);
-$email = trim($data->email);
-$password = $data->password;
-
-// 4. Hash the password (for security)
-$password_hash = password_hash($password, PASSWORD_DEFAULT);
+// Never store the plain password.
+$passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
 try {
-    // 5. Check if the email already exists
-    $stmt = $pdo->prepare("SELECT id FROM students WHERE email = ?");
-    $stmt->execute([$email]);
+    // CHANGED: no SELECT first. The UNIQUE index on email does the check for us.
+    $stmt = $pdo->prepare('INSERT INTO students (name, email, password_hash) VALUES (?, ?, ?)');
+    $stmt->execute([$name, $email, $passwordHash]);
 
-    if ($stmt->rowCount() > 0) {
-        http_response_code(409); // 409 Conflict
-        echo json_encode(["error" => "Email is already registered."]);
-        exit();
-    }
-
-    // 6. Insert the new user into the database
-    $stmt = $pdo->prepare("INSERT INTO students (name, email, password_hash) VALUES (?, ?, ?)");
-    $stmt->execute([$name, $email, $password_hash]);
-
-    // 7. Return success response
-    http_response_code(201); // 201 Created
-    echo json_encode([
-        "message" => "Registration successful!",
-        "user" => [
-            "id" => $pdo->lastInsertId(),
-            "name" => $name,
-            "email" => $email
-        ]
+    respond(201, [
+        'message' => 'Registration successful!',
+        'student' => [
+            'id'    => (int)$pdo->lastInsertId(),
+            'name'  => $name,
+            'email' => $email,
+        ],
     ]);
 } catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(["error" => "Registration failed: " . $e->getMessage()]);
+    // CHANGED: SQLSTATE 23000 means a duplicate value in a UNIQUE column (the email)
+    if ($e->getCode() === '23000') {
+        respond(409, ['error' => 'Email is already registered.']);
+    }
+    // CHANGED: log the details, send only a generic message
+    error_log('Register failed: ' . $e->getMessage());
+    respond(500, ['error' => 'Server error. Please try again later.']);
 }

@@ -12,6 +12,7 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -21,33 +22,26 @@ export default function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // تصفير الأخطاء القديمة
+    setError("");
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match!");
-      return;
-    }
-
+    // CHANGED: length check first, then the match check
     if (password.length < 8) {
       setError("Password must be at least 8 characters.");
       return;
     }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
 
-    const userData = {
-      name: fullName,
-      email: email,
-      password: password,
-    };
-
+    setLoading(true); // CHANGED: block double clicks while the request runs
     try {
-      const response = await fetch("http://localhost/api/register.php", {
+      // CHANGED: relative URL. The Vite proxy forwards /api to Apache.
+      const response = await fetch("/api/register.php", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: fullName.trim(), email, password }),
       });
-
       const data = await response.json();
 
       if (response.ok) {
@@ -55,9 +49,11 @@ export default function SignUp() {
       } else {
         setError(data.error || "Registration failed.");
       }
-    } catch (err) {
-      console.error(err);
-      setError("Failed to connect to the server.");
+    } catch {
+      // CHANGED: a clear message, nothing technical shown to the user
+      setError("Could not reach the server. Please try again.");
+    } finally {
+      setLoading(false); // CHANGED: always enable the button again
     }
   };
   return (
@@ -210,7 +206,9 @@ export default function SignUp() {
               </div>
             </div>
             {error && (
-              <p style={{ color: "red", fontSize: "0.9rem" }}>{error}</p>
+              <p className="auth-error" role="alert">
+                {error}
+              </p>
             )}
 
             <div className="checkbox-group">
@@ -228,9 +226,9 @@ export default function SignUp() {
             <button
               type="submit"
               className="auth-btn login-style"
-              disabled={!agreed}
+              disabled={!agreed || loading}
             >
-              Sign Up
+              {loading ? "Creating account..." : "Sign Up"}
             </button>
           </form>
 

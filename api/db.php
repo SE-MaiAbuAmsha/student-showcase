@@ -1,39 +1,36 @@
 <?php
-// db.php - Database Connection File
+// db.php: the database connection used by every API file.
 
-// 1. Database Credentials
-$host = 'localhost';
-$dbname = 'student_showcase_db'; // اسم الداتا بيز (تأكدي إنه مطابق للي عملتيه)
-$username = 'root';   // اسم المستخدم الافتراضي في XAMPP
-$password = '';       // الباسورد الافتراضي في XAMPP فاضي
+// CHANGED: variables renamed with a db_ prefix, so they never clash with other files
+$db_host = 'localhost';
+$db_name = 'student_showcase_db'; // must match the name in phpMyAdmin
+$db_user = 'root';                // XAMPP default
+$db_pass = '';                    // XAMPP default
 
-// 2. CORS Headers (Very Important for React to connect with PHP)
-// This tells the browser that it's okay for React (on port 5173) to request data from this PHP file.
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+// Every API answer is JSON.
+// CHANGED: the CORS lines were removed because the Vite proxy makes them unnecessary
+header('Content-Type: application/json; charset=UTF-8');
 
-// 3. Handle Preflight Request
-// Browsers send an OPTIONS request first to check if the server is secure. We just say "Yes, go ahead".
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    http_response_code(200);
+// CHANGED: small helper so every file answers in one line
+function respond($status, $data)
+{
+    http_response_code($status);
+    echo json_encode($data);
     exit();
 }
 
-// 4. Try to Connect
 try {
-    // Create a new connection using PDO (the safest way to connect to MySQL)
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-
-    // Tell PDO to throw an error if something goes wrong (so we can see the error)
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // If the connection is successful, do nothing. The script will continue.
-
+    $pdo = new PDO(
+        "mysql:host=$db_host;dbname=$db_name;charset=utf8mb4",
+        $db_user,
+        $db_pass,
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,       // throw errors instead of failing silently
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,  // CHANGED: rows come back as named arrays
+        ]
+    );
 } catch (PDOException $e) {
-    // 5. If connection fails, return a JSON error message
-    http_response_code(500); // 500 means "Internal Server Error"
-    echo json_encode(["error" => "Database connection failed: " . $e->getMessage()]);
-    exit(); // Stop the script
+    // CHANGED: the real reason goes to the server log, the browser gets a generic message
+    error_log('DB connection failed: ' . $e->getMessage());
+    respond(500, ['error' => 'Server error. Please try again later.']);
 }
