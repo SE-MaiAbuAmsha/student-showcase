@@ -11,13 +11,36 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const name = email.split("@")[0];
-    localStorage.setItem("userName", name);
-    localStorage.setItem("userEmail", email);
-    navigate("/profile");
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/login.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Save user data to localStorage (to show the navbar and profile)
+        localStorage.setItem("userName", data.user.name);
+        localStorage.setItem("userId", data.user.id);
+        navigate("/profile");
+      } else {
+        setError(data.error || "Login failed.");
+      }
+    } catch (err) {
+      setError("Could not reach the server.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -33,7 +56,7 @@ export default function Login() {
           </BackLink>
           <Link to="/signup" className="nav-btn">
             Sign Up
-          </Link>{" "}
+          </Link>
         </div>
       </header>
 
@@ -47,6 +70,7 @@ export default function Login() {
             </p>
           </div>
 
+          {/* هنا الفورم الصح والوحيد */}
           <form className="auth-form" onSubmit={handleLogin}>
             <div className="form-group">
               <label htmlFor="login-email">EMAIL</label>
@@ -91,7 +115,6 @@ export default function Login() {
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {" "}
                   {showPassword ? (
                     <svg
                       viewBox="0 0 24 24"
@@ -121,8 +144,19 @@ export default function Login() {
               </div>
             </div>
 
-            <button type="submit" className="auth-btn login-style">
-              Log In
+            {/* Display error message if login fails */}
+            {error && (
+              <p className="auth-error" role="alert">
+                {error}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="auth-btn login-style"
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Log In"}
             </button>
           </form>
 
