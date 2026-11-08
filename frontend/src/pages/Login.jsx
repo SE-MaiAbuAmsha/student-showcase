@@ -29,20 +29,20 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        // Save user data to localStorage (to show the navbar and profile)
-        localStorage.setItem("userName", data.user.name);
-        localStorage.setItem("userId", data.user.id);
-        navigate("/profile");
-      } else {
-        setError(data.error || "Login failed.");
-      }
-    } catch (err) {
-      setError("Could not reach the server.");
-    } finally {
-      setLoading(false);
-    }
+  // CHANGED: the server now answers with "student". The browser keeps only a display hint;
+  // the real login state lives in the server session.
+  localStorage.setItem("userName", data.student.name);
+  localStorage.setItem("userEmail", data.student.email); // CHANGED: Profile shows it
+  navigate("/profile");
+} else {
+  setError(data.error || "Login failed.");
+}
+} catch {
+  // CHANGED: no unused "err" variable
+  setError("Could not reach the server.");
+} finally {
   };
-
+  }
   return (
     <div className="auth-page">
       <PlaneField />
@@ -70,7 +70,6 @@ export default function Login() {
             </p>
           </div>
 
-          {/* هنا الفورم الصح والوحيد */}
           <form className="auth-form" onSubmit={handleLogin}>
             <div className="form-group">
               <label htmlFor="login-email">EMAIL</label>
@@ -78,6 +77,7 @@ export default function Login() {
                 <input
                   id="login-email"
                   type="email"
+                  autoComplete="email"
                   placeholder="leslie.alexander@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -104,6 +104,7 @@ export default function Login() {
                 <input
                   id="login-password"
                   type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
                   placeholder="••••••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

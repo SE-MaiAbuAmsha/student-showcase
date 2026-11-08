@@ -7,7 +7,12 @@ function Navbar() {
   // Check if a user is logged in
   const userName = localStorage.getItem("userName");
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/logout.php", { method: "POST" }); // destroy the server session
+    } catch {
+      // The server is unreachable: we still clear the browser data below.
+    }
     localStorage.removeItem("userName");
     localStorage.removeItem("userEmail");
     navigate("/");

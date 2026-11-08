@@ -1,74 +1,41 @@
 <?php
-// login.php: Authenticate a student and start a session.
+// login.php: check the credentials and start a session.
+require_once 'auth.php'; // CHANGED: auth.php already loads db.php
 
-// Include the database connection file
-require_once 'db.php';
-
-// Start a PHP session to store the logged-in user's data
-session_start();
-
-// Only allow POST requests for security
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['error' => 'Method not allowed. Please use POST.']);
-    exit();
+    respond(405, ['error' => 'Method not allowed. Please use POST.']);
 }
 
-// Read the JSON data sent from React
-$data = json_decode(file_get_contents('php://input'), true);
-
-// Extract email and password, with default empty strings if not provided
+$data     = json_decode(file_get_contents('php://input'), true);
 $email    = strtolower(trim((string)($data['email'] ?? '')));
 $password = (string)($data['password'] ?? '');
 
-// Check if either field is empty
 if ($email === '' || $password === '') {
-    http_response_code(400); // Bad Request
-    echo json_encode(['error' => 'Please enter both email and password.']);
-    exit();
+    respond(400, ['error' => 'Please enter both email and password.']);
 }
 
 try {
-    // Prepare a SQL statement to find the user by email
     $stmt = $pdo->prepare('SELECT id, name, email, password_hash FROM students WHERE email = ?');
-
-    // Execute the query with the provided email
     $stmt->execute([$email]);
+    $student = $stmt->fetch(); // CHANGED: FETCH_ASSOC is already the default in db.php
 
-    // Fetch the result as an associative array
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Check if user exists AND if the provided password matches the hashed one
-    // password_verify() securely compares plain text with the hash
-    if ($user && password_verify($password, $user['password_hash'])) {
-
-        // Generate a new session ID for security (prevents session fixation)
-        session_regenerate_id(true);
-
-        // Store user data in the session variables
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_name'] = $user['name'];
-
-        // Return success response with user details (excluding password)
-        http_response_code(200); // OK
-        echo json_encode([
-            'message' => 'Login successful',
-            'user' => [
-                'id'    => $user['id'],
-                'name'  => $user['name'],
-                'email' => $user['email'],
-            ],
-        ]);
-    } else {
-        // If email not found OR password is wrong, return a generic error for security
-        http_response_code(401); // Unauthorized
-        echo json_encode(['error' => 'Invalid email or password.']);
+    // CHANGED: one check for both cases. The same message hides which emails exist.
+    if (!$student || !password_verify($password, $student['password_hash'])) {
+        respond(401, ['error' => 'Invalid email or password.']);
     }
-} catch (PDOException $e) {
-    // Log the actual error for debugging (server-side)
-    error_log('Login failed: ' . $e->getMessage());
 
-    // Return a generic error message to the client (hide technical details)
-    http_response_code(500); // Internal Server Error
-    echo json_encode(['error' => 'Server error. Please try again later.']);
+    start_session(); // CHANGED: shared helper with the safer cookie settings
+    session_regenerate_id(true); // new session id after login (prevents session fixation)
+    $_SESSION['student_id'] = (int)$student['id']; // CHANGED: only the id is stored; the name is read from the DB when needed
+
+    respond(200, [
+        'student' => [ // CHANGED: key renamed from "user" to match the table name
+            'id'    => (int)$student['id'],
+            'name'  => $student['name'],
+            'email' => $student['email'],
+        ],
+    ]);
+} catch (PDOException $e) {
+    error_log('Login failed: ' . $e->getMessage());
+    respond(500, ['error' => 'Server error. Please try again later.']);
 }
