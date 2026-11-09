@@ -2,32 +2,81 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CategoryBadge from "../components/CategoryBadge";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
-import { MOCK_CURRENT_AUTHOR, SAMPLE_PROJECTS } from "../data/projects";
 import "./Profile.css";
 
 export default function Profile() {
-  const userName = localStorage.getItem("userName") ?? "";
-  const userEmail = localStorage.getItem("userEmail") ?? "";
+  // Get user info from localStorage
+  const userName = localStorage.getItem("userName") ?? "Student";
+  const userEmail = localStorage.getItem("userEmail") ?? "student@example.com";
+  const userId = localStorage.getItem("userId");
 
   const [showWelcome, setShowWelcome] = useState(true);
   const [projectToDelete, setProjectToDelete] = useState(null);
 
-  // TEMP: the logged-in student's projects come from the sample data
-  const [myProjects, setMyProjects] = useState(() =>
-    SAMPLE_PROJECTS.filter((p) => p.author === MOCK_CURRENT_AUTHOR),
-  );
+  // State for the projects (start with empty array, not dummy data)
+  const [myProjects, setMyProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  // 1. Hide welcome banner after 4 seconds
   useEffect(() => {
     const timer = setTimeout(() => setShowWelcome(false), 4000);
     return () => clearTimeout(timer);
   }, []);
 
-  const handleConfirmDelete = () => {
-    // TODO: call the API (DELETE) when the back end exists
-    setMyProjects((current) =>
-      current.filter((p) => p.id !== projectToDelete.id),
-    );
-    setProjectToDelete(null);
+  // 2. Fetch the user's projects from the API
+  useEffect(() => {
+    if (!userId) return; // If not logged in, do nothing
+
+    fetch(`/api/projects.php?student_id=${userId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        // Map the data to match the keys expected in the UI
+        const formattedData = data.map((p) => ({
+          id: p.id,
+          title: p.title,
+          description: p.description,
+          category: p.category,
+          author: p.author,
+          imageUrl: p.image_url,
+          githubUrl: p.github_url,
+          demoUrl: p.demo_url,
+        }));
+        setMyProjects(formattedData);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching my projects:", err);
+        setLoading(false);
+      });
+  }, [userId]);
+
+  // 3. Handle deleting a project
+  const handleConfirmDelete = async () => {
+    if (!projectToDelete) return;
+
+    try {
+      // Send DELETE request to the API
+      const response = await fetch(
+        `/api/delete_project.php?id=${projectToDelete.id}`,
+        {
+          method: "DELETE",
+        },
+      );
+
+      if (response.ok) {
+        // If successful, remove it from the UI state
+        setMyProjects((current) =>
+          current.filter((p) => p.id !== projectToDelete.id),
+        );
+        setProjectToDelete(null);
+      } else {
+        const data = await response.json();
+        alert(data.error || "Failed to delete project.");
+      }
+    } catch (err) {
+      console.error("Error deleting project:", err);
+      alert("Could not connect to the server.");
+    }
   };
 
   const initials = userName.substring(0, 2).toUpperCase();
@@ -66,7 +115,9 @@ export default function Profile() {
             </Link>
           </div>
 
-          {myProjects.length === 0 ? (
+          {loading ? (
+            <p>Loading your projects...</p>
+          ) : myProjects.length === 0 ? (
             <p>You haven't shared any projects yet.</p>
           ) : (
             <div className="profile-projects-grid">

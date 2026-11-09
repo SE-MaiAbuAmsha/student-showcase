@@ -15,6 +15,7 @@ function Navbar() {
     }
     localStorage.removeItem("userName");
     localStorage.removeItem("userEmail");
+    localStorage.removeItem("userId"); // ✨ ضيفي السطر ده عشان نمسح الرقم
     navigate("/");
   };
 

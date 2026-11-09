@@ -23,9 +23,62 @@ export default function ProjectForm({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
+
+    const studentId = localStorage.getItem("userId");
+    if (!studentId && !initialData) {
+      alert("You must be logged in to add a project.");
+      return;
+    }
+
+    // Map the category name to its ID (Based on your database)
+    const categoryMap = {
+      "Web Development": 1,
+      "UX Design": 2,
+      AI: 3,
+      "Business Analytics": 4,
+      Python: 5,
+    };
+
+    // Determine if we are editing or creating
+    const isEditing = !!initialData;
+
+    const payload = {
+      student_id: studentId, // Only needed for Create
+      project_id: isEditing ? initialData.id : null, // Only needed for Update
+      category_id: categoryMap[formData.category] || 1,
+      title: formData.title,
+      description: formData.description,
+      image_url: formData.imageUrl,
+      github_url: formData.githubUrl,
+      demo_url: formData.demoUrl,
+    };
+
+    // Choose the API endpoint based on the mode
+    const endpoint = isEditing
+      ? "/api/update_project.php"
+      : "/api/create_project.php";
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST", // We'll use POST for both to simplify the CORS setup
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Success! Redirect to profile page
+        onSave();
+      } else {
+        alert(data.error || "Failed to save project.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to connect to the server.");
+    }
   };
 
   const shortDesc =

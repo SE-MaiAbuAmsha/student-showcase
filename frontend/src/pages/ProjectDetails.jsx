@@ -1,26 +1,55 @@
-import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import CategoryBadge from "../components/CategoryBadge";
-import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import ProjectImage from "../components/ProjectImage";
-import { MOCK_CURRENT_AUTHOR, SAMPLE_PROJECTS } from "../data/projects";
 import "./ProjectDetails.css";
-import BackLink from "../components/BackLink";
 
 function ProjectDetails() {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const project = SAMPLE_PROJECTS.find((p) => p.id === Number(id));
+  // Fetch the project details from the API
+  useEffect(() => {
+    fetch(`/api/project.php?id=${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          setError(data.error);
+        } else {
+          // Map snake_case to camelCase for the UI
+          setProject({
+            id: data.id,
+            title: data.title,
+            description: data.description,
+            category: data.category,
+            author: data.author,
+            imageUrl: data.image_url,
+            githubUrl: data.github_url,
+            demoUrl: data.demo_url,
+          });
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Could not load the project.");
+        setLoading(false);
+      });
+  }, [id]);
 
-  if (!project) {
+  if (loading) return <p className="container">Loading project details...</p>;
+
+  if (error || !project) {
     return (
       <div className="container details">
-        <BackLink to="/projects">Back to Projects</BackLink>
+        <Link to="/projects" className="details__back">
+          ← Back to Projects
+        </Link>
         <div className="details__missing">
           <h1 className="details__title">Project not found</h1>
-          <p>This project doesn't exist or was removed.</p>
+          <p>{error || "This project doesn't exist or was removed."}</p>
           <Link to="/projects" className="details__btn details__btn--primary">
             Browse projects
           </Link>
@@ -29,59 +58,34 @@ function ProjectDetails() {
     );
   }
 
-  const { title, description, category, imageUrl, githubUrl, demoUrl, author } =
-    project;
-
-  const isLoggedIn = Boolean(localStorage.getItem("userName"));
-  const isOwner = isLoggedIn && author === MOCK_CURRENT_AUTHOR;
-
-  const handleConfirmDelete = () => {
-    // TODO: call the API (DELETE) when the back end exists
-    setIsModalOpen(false);
-    navigate("/profile");
-  };
-
   return (
     <div className="container details">
-      <BackLink to="/projects">Back to Projects</BackLink>
+      <Link to="/projects" className="details__back">
+        ← Back to Projects
+      </Link>
 
       <article className="details__card">
         <header className="details__header">
           <div>
-            <CategoryBadge category={category} />
-            <h1 className="details__title">{title}</h1>
+            <CategoryBadge category={project.category} />
+            <h1 className="details__title">{project.title}</h1>
             <p className="details__author">
-              by <strong>{author}</strong>
+              by <strong>{project.author}</strong>
             </p>
           </div>
-
-          {isOwner && (
-            <div className="details__owner">
-              <Link to={`/edit-project/${project.id}`} className="details__btn">
-                Edit
-              </Link>
-              <button
-                type="button"
-                className="details__btn details__btn--danger"
-                onClick={() => setIsModalOpen(true)}
-              >
-                Delete
-              </button>
-            </div>
-          )}
         </header>
 
         <div className="details__image">
-          <ProjectImage imageUrl={imageUrl} title={title} />
+          <ProjectImage imageUrl={project.imageUrl} title={project.title} />
         </div>
 
         <h2 className="details__subtitle">About the project</h2>
-        <p className="details__text">{description}</p>
+        <p className="details__text">{project.description}</p>
 
         <div className="details__actions">
-          {demoUrl && (
+          {project.demoUrl && (
             <a
-              href={demoUrl}
+              href={project.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="details__btn details__btn--primary"
@@ -89,23 +93,18 @@ function ProjectDetails() {
               Live demo ↗
             </a>
           )}
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="details__btn"
-          >
-            View on GitHub
-          </a>
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="details__btn"
+            >
+              View on GitHub
+            </a>
+          )}
         </div>
       </article>
-
-      <ConfirmDeleteModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={handleConfirmDelete}
-        projectTitle={title}
-      />
     </div>
   );
 }

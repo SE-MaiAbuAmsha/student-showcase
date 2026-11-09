@@ -29,20 +29,21 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-  // CHANGED: the server now answers with "student". The browser keeps only a display hint;
-  // the real login state lives in the server session.
-  localStorage.setItem("userName", data.student.name);
-  localStorage.setItem("userEmail", data.student.email); // CHANGED: Profile shows it
-  navigate("/profile");
-} else {
-  setError(data.error || "Login failed.");
-}
-} catch {
-  // CHANGED: no unused "err" variable
-  setError("Could not reach the server.");
-} finally {
+        // CHANGED: the server now answers with "student". The browser keeps only a display hint;
+        // the real login state lives in the server session.
+        localStorage.setItem("userName", data.student.name);
+        localStorage.setItem("userEmail", data.student.email);
+        localStorage.setItem("userId", data.student.id);
+        navigate("/profile");
+      } else {
+        setError(data.error || "Login failed.");
+      }
+    } catch {
+      // CHANGED: no unused "err" variable
+      setError("Could not reach the server.");
+    } finally {
+    }
   };
-  }
   return (
     <div className="auth-page">
       <PlaneField />
