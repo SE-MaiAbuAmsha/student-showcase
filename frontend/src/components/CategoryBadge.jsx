@@ -1,10 +1,11 @@
 import "./CategoryBadge.css";
 
 const CATEGORY_STYLES = {
-  Web: { bg: "#E0F2FE", text: "#0369A1" },
-  "UI/UX": { bg: "#DCFCE7", text: "#15803D" },
+  "Web Development": { bg: "#E0F2FE", text: "#0369A1" },
+  Python: { bg: "#FEF3C7", text: "#92400E" },
+  "UX Design": { bg: "#DCFCE7", text: "#15803D" },
+  "Business Analytics": { bg: "#FFE4E6", text: "#9F1239" },
   AI: { bg: "#F3E8FF", text: "#7E22CE" },
-  Data: { bg: "#FEF3C7", text: "#92400E" },
 };
 const DEFAULT_STYLE = { bg: "#E5E7EB", text: "#374151" };
 

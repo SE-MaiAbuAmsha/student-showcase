@@ -98,14 +98,14 @@ database/ schema.sql (in progress)
 ## Known limitations
 
 - Until the API is connected, projects are sample data and changes do not persist.
-- Login is simulated in the browser, so it is not real security. Real authentication will be done with PHP sessions.
+- No rate limiting on login attempts.
 - Images are linked by URL. Uploading images is out of scope for the MVP.
 
 ## Roadmap
 
 - [x] Front end with sample data
-- [ ] MySQL schema and seed data
-- [ ] Read endpoints and connecting the front end
+- [x] MySQL schema and seed data
+- [x] Read endpoints and connecting the front end
 - [ ] Create, update and delete endpoints
 - [ ] Sessions, ownership checks and validation
 - [ ] Testing, security checklist and final polish

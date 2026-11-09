@@ -1,17 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProjectCard from "../components/ProjectCard";
 import CategoryChips from "../components/CategoryChips";
 import SearchBar from "../components/SearchBar";
-import { CATEGORIES, SAMPLE_PROJECTS } from "../data/projects";
+import { CATEGORIES } from "../data/projects";
 import "./Projects.css";
 
 function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [query, setQuery] = useState("");
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch projects from the PHP API
+  useEffect(() => {
+    fetch("/api/projects.php")
+      .then((res) => res.json())
+      .then((data) => {
+        // Map the data to match the keys expected by ProjectCard
+        const formattedData = data.map((p) => ({
+          id: p.id,
+          title: p.title,
+          description: p.description,
+          category: p.category,
+          author: p.author,
+          imageUrl: p.image_url,
+          githubUrl: p.github_url,
+          demoUrl: p.demo_url,
+        }));
+        setProjects(formattedData);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching projects:", err);
+        setLoading(false);
+      });
+  }, []);
 
   const normalizedQuery = query.trim().toLowerCase();
 
-  const visibleProjects = SAMPLE_PROJECTS.filter((project) => {
+  const visibleProjects = projects.filter((project) => {
     const matchesCategory =
       selectedCategory === "All" || project.category === selectedCategory;
     const matchesQuery = project.title.toLowerCase().includes(normalizedQuery);
@@ -22,6 +49,8 @@ function Projects() {
     setSelectedCategory("All");
     setQuery("");
   };
+
+  if (loading) return <p className="container">Loading projects...</p>;
 
   return (
     <div className="container projects-page">

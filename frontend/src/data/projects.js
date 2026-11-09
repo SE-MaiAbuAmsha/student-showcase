@@ -2,7 +2,13 @@ import weatherImg from "../assets/projects/weather-dashboard.jpeg";
 import budgetImg from "../assets/projects/budget-buddy.jpeg";
 import quizImg from "../assets/projects/student-quiz-bot.jpeg";
 
-export const CATEGORIES = ["Web", "UI/UX", "AI", "Data"];
+export const CATEGORIES = [
+  "Web Development",
+  "Python",
+  "UX Design",
+  "Business Analytics",
+  "AI",
+];
 
 // TEMP: until the API exists, the logged-in student is treated as "Sara"
 export const MOCK_CURRENT_AUTHOR = "Sara";
@@ -13,7 +19,7 @@ export const SAMPLE_PROJECTS = [
     title: "Weather Dashboard",
     description:
       "A responsive dashboard that shows a five-day forecast for any city with live radar overlay.",
-    category: "Web",
+    category: "Web Development",
     imageUrl: weatherImg,
     githubUrl: "https://github.com",
     demoUrl: "https://example.com",
@@ -24,7 +30,7 @@ export const SAMPLE_PROJECTS = [
     title: "Budget Buddy",
     description:
       "A simple app to track daily spending, visualize recurring expenses, and set monthly limits.",
-    category: "UI/UX",
+    category: "UX Design",
     imageUrl: budgetImg,
     githubUrl: "https://github.com",
     demoUrl: "",
@@ -46,7 +52,7 @@ export const SAMPLE_PROJECTS = [
     title: "Library Manager",
     description:
       "Catalogue, borrowing workflows, and return tracking built for community and school libraries.",
-    category: "Web",
+    category: "Web Development",
     imageUrl: "",
     githubUrl: "https://github.com",
     demoUrl: "",
@@ -57,7 +63,7 @@ export const SAMPLE_PROJECTS = [
     title: "Sales Insights",
     description:
       "Charts and summaries built from a year of anonymous sales data.",
-    category: "Data",
+    category: "Business Analytics",
     imageUrl: "",
     githubUrl: "https://github.com",
     demoUrl: "https://example.com",
@@ -68,7 +74,7 @@ export const SAMPLE_PROJECTS = [
     title: "Portfolio Redesign",
     description:
       "A case study redesigning a personal portfolio for clarity and accessibility.",
-    category: "UI/UX",
+    category: "UX Design",
     imageUrl: "",
     githubUrl: "https://github.com",
     demoUrl: "",
@@ -78,10 +84,21 @@ export const SAMPLE_PROJECTS = [
     id: 7,
     title: "Plant Care Reminder",
     description: "Watering reminders and care tips for houseplants.",
-    category: "UI/UX",
+    category: "UX Design",
     imageUrl: "",
     githubUrl: "https://github.com",
     demoUrl: "",
     author: "Maya",
+  },
+  {
+    id: 8,
+    title: "Habit Tracker",
+    description:
+      "A Python command-line tool that tracks daily habits and shows weekly streaks.",
+    category: "Python",
+    imageUrl: "",
+    githubUrl: "https://github.com",
+    demoUrl: "",
+    author: "Dana",
   },
 ];

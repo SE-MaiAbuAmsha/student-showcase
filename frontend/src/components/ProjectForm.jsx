@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProjectCard from "./ProjectCard";
 import "./ProjectForm.css";
+import { CATEGORIES } from "../data/projects";
 
 export default function ProjectForm({
   initialData = null,
@@ -62,10 +63,11 @@ export default function ProjectForm({
               value={formData.category}
               onChange={handleChange}
             >
-              <option value="Web">Web Development</option>
-              <option value="UI/UX">UI/UX Design</option>
-              <option value="AI">AI / Machine Learning</option>
-              <option value="Data">Data Science</option>
+              {CATEGORIES.map((name) => (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              ))}
             </select>
           </div>
 
