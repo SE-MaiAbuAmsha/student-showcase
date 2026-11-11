@@ -1,39 +1,18 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ProjectCard from "./ProjectCard";
+import { api } from "../api";
 import "./FeaturedProjects.css";
 
 export default function FeaturedProjects() {
-  const [featured, setFeatured] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState([]);
+  const [error, setError] = useState("");
 
-  // Fetch projects from the PHP API
   useEffect(() => {
-    fetch("/api/projects.php")
-      .then((res) => res.json())
-      .then((data) => {
-        // Map the data to match the keys expected by ProjectCard
-        const formattedData = data.map((p) => ({
-          id: p.id,
-          title: p.title,
-          description: p.description,
-          category: p.category,
-          author: p.author,
-          imageUrl: p.image_url,
-          githubUrl: p.github_url,
-          demoUrl: p.demo_url,
-        }));
-        // Get only the first 3 projects for the featured section
-        setFeatured(formattedData.slice(0, 3));
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching featured projects:", err);
-        setLoading(false);
-      });
+    api("/api/projects.php")
+      .then((data) => setProjects(data.slice(0, 3)))
+      .catch((err) => setError(err.message));
   }, []);
-
-  if (loading) return <p>Loading featured projects...</p>;
 
   return (
     <section className="featured-section">
@@ -50,11 +29,15 @@ export default function FeaturedProjects() {
           </Link>
         </div>
 
-        <div className="projects-grid">
-          {featured.map((project) => (
-            <ProjectCard key={project.id} {...project} />
-          ))}
-        </div>
+        {error ? (
+          <p role="alert">{error}</p>
+        ) : (
+          <div className="projects-grid">
+            {projects.map((project) => (
+              <ProjectCard key={project.id} {...project} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

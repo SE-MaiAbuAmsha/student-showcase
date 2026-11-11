@@ -2,80 +2,47 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CategoryBadge from "../components/CategoryBadge";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
+import { api } from "../api";
 import "./Profile.css";
 
 export default function Profile() {
-  // Get user info from localStorage
-  const userName = localStorage.getItem("userName") ?? "Student";
-  const userEmail = localStorage.getItem("userEmail") ?? "student@example.com";
-  const userId = localStorage.getItem("userId");
+  const userName = localStorage.getItem("userName") ?? "";
+  const userEmail = localStorage.getItem("userEmail") ?? "";
 
   const [showWelcome, setShowWelcome] = useState(true);
   const [projectToDelete, setProjectToDelete] = useState(null);
-
-  // State for the projects (start with empty array, not dummy data)
   const [myProjects, setMyProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
 
-  // 1. Hide welcome banner after 4 seconds
   useEffect(() => {
     const timer = setTimeout(() => setShowWelcome(false), 4000);
     return () => clearTimeout(timer);
   }, []);
 
-  // 2. Fetch the user's projects from the API
   useEffect(() => {
-    if (!userId) return; // If not logged in, do nothing
+    const userId = localStorage.getItem("userId");
+    if (!userId) return;
 
-    fetch(`/api/projects.php?student_id=${userId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        // Map the data to match the keys expected in the UI
-        const formattedData = data.map((p) => ({
-          id: p.id,
-          title: p.title,
-          description: p.description,
-          category: p.category,
-          author: p.author,
-          imageUrl: p.image_url,
-          githubUrl: p.github_url,
-          demoUrl: p.demo_url,
-        }));
-        setMyProjects(formattedData);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching my projects:", err);
-        setLoading(false);
-      });
-  }, [userId]);
+    api(`/api/projects.php?mine=1&student_id=${userId}`)
+      .then(setMyProjects)
+      .catch((err) => setLoadError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
 
-  // 3. Handle deleting a project
   const handleConfirmDelete = async () => {
     if (!projectToDelete) return;
-
     try {
-      // Send DELETE request to the API
-      const response = await fetch(
-        `/api/delete_project.php?id=${projectToDelete.id}`,
-        {
-          method: "DELETE",
-        },
+      await api(`/api/delete_project.php?id=${projectToDelete.id}`, {
+        method: "DELETE",
+      });
+      setMyProjects((current) =>
+        current.filter((p) => p.id !== projectToDelete.id),
       );
-
-      if (response.ok) {
-        // If successful, remove it from the UI state
-        setMyProjects((current) =>
-          current.filter((p) => p.id !== projectToDelete.id),
-        );
-        setProjectToDelete(null);
-      } else {
-        const data = await response.json();
-        alert(data.error || "Failed to delete project.");
-      }
     } catch (err) {
-      console.error("Error deleting project:", err);
-      alert("Could not connect to the server.");
+      setLoadError(err.message);
+    } finally {
+      setProjectToDelete(null);
     }
   };
 
@@ -114,6 +81,8 @@ export default function Profile() {
               + Add New Project
             </Link>
           </div>
+
+          {loadError && <p role="alert">{loadError}</p>}
 
           {loading ? (
             <p>Loading your projects...</p>

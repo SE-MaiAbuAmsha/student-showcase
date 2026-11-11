@@ -1,5 +1,4 @@
 <?php
-// project.php: Get a single project by ID
 require_once 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
@@ -18,7 +17,16 @@ if ($id <= 0) {
 
 try {
     $stmt = $pdo->prepare('
-        SELECT p.*, c.name AS category, s.name AS author 
+        SELECT 
+            p.id, 
+            p.title, 
+            p.description, 
+            p.image_url AS imageUrl, 
+            p.github_url AS githubUrl, 
+            p.demo_url AS demoUrl, 
+            p.student_id AS studentId,
+            c.name AS category, 
+            s.name AS author 
         FROM projects p
         JOIN categories c ON p.category_id = c.id
         JOIN students s ON p.student_id = s.id

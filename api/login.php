@@ -1,6 +1,6 @@
 <?php
 // login.php: check the credentials and start a session.
-require_once 'auth.php'; // CHANGED: auth.php already loads db.php
+require_once 'auth.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     respond(405, ['error' => 'Method not allowed. Please use POST.']);
@@ -17,19 +17,18 @@ if ($email === '' || $password === '') {
 try {
     $stmt = $pdo->prepare('SELECT id, name, email, password_hash FROM students WHERE email = ?');
     $stmt->execute([$email]);
-    $student = $stmt->fetch(); // CHANGED: FETCH_ASSOC is already the default in db.php
+    $student = $stmt->fetch();
 
-    // CHANGED: one check for both cases. The same message hides which emails exist.
     if (!$student || !password_verify($password, $student['password_hash'])) {
         respond(401, ['error' => 'Invalid email or password.']);
     }
 
-    start_session(); // CHANGED: shared helper with the safer cookie settings
-    session_regenerate_id(true); // new session id after login (prevents session fixation)
-    $_SESSION['student_id'] = (int)$student['id']; // CHANGED: only the id is stored; the name is read from the DB when needed
+    start_session();
+    session_regenerate_id(true);
+    $_SESSION['student_id'] = (int)$student['id'];
 
     respond(200, [
-        'student' => [ // CHANGED: key renamed from "user" to match the table name
+        'student' => [
             'id'    => (int)$student['id'],
             'name'  => $student['name'],
             'email' => $student['email'],

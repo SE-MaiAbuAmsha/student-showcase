@@ -1,79 +1,53 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import BackLink from "../components/BackLink";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import ProjectForm from "../components/ProjectForm";
-import BackLink from "../components/BackLink";
+import { api } from "../api";
 import "./ShareProject.css";
 
 export default function EditProject() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  // States for fetching data
+
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
 
   const currentUserId = localStorage.getItem("userId");
 
-  // Fetch the project from the API when the component mounts
   useEffect(() => {
-    fetch(`/api/project.php?id=${id}`)
-      .then((res) => res.json())
+    api(`/api/project.php?id=${id}`)
       .then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          // Check if the logged-in user is the owner of the project
-          // Note: The API returns student_id as a number, localStorage as a string
-          if (String(data.student_id) !== String(currentUserId)) {
-            setError("You can only edit your own projects.");
-          } else {
-            // Map the data to match ProjectForm's expected keys
-            setProject({
-              id: data.id,
-              title: data.title,
-              category: data.category,
-              description: data.description,
-              githubUrl: data.github_url,
-              demoUrl: data.demo_url,
-              imageUrl: data.image_url,
-            });
-          }
+        if (String(data.studentId) !== currentUserId) {
+          setError("You can only edit your own projects.");
+          return;
         }
-        setLoading(false);
+        setProject({
+          ...data,
+          imageUrl: data.imageUrl ?? "",
+          githubUrl: data.githubUrl ?? "",
+          demoUrl: data.demoUrl ?? "",
+        });
       })
-      .catch((err) => {
-        console.error(err);
-        setError("Could not load the project.");
-        setLoading(false);
-      });
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, [id, currentUserId]);
-
-  const handleSave = () => {
-    // The actual update happens inside ProjectForm.jsx
-    navigate("/profile");
-  };
 
   const handleConfirmDelete = async () => {
     try {
-      const response = await fetch(`/api/delete_project.php?id=${id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        setIsModalOpen(false);
-        navigate("/profile");
-      } else {
-        alert("Failed to delete project.");
-      }
+      await api(`/api/delete_project.php?id=${id}`, { method: "DELETE" });
+      navigate("/profile");
     } catch (err) {
-      console.error(err);
+      setIsModalOpen(false);
+      setDeleteError(err.message);
     }
   };
 
   if (loading) {
-    return <div className="share-project-page container">Loading project...</div>;
+    return <div className="share-project-page">Loading project...</div>;
   }
 
   if (error) {
@@ -94,11 +68,16 @@ export default function EditProject() {
         <BackLink to="/profile">Back to My Profile</BackLink>
         <h1>Edit Project</h1>
         <p>Update your details, external repositories, and preview banner.</p>
+        {deleteError && (
+          <p className="form-error" role="alert">
+            {deleteError}
+          </p>
+        )}
       </div>
 
       <ProjectForm
         initialData={project}
-        onSave={handleSave}
+        onSave={() => navigate("/profile")}
         onCancel={() => navigate("/profile")}
         onDelete={() => setIsModalOpen(true)}
       />

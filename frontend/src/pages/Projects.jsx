@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import ProjectCard from "../components/ProjectCard";
 import CategoryChips from "../components/CategoryChips";
 import SearchBar from "../components/SearchBar";
+import { api } from "../api";
 import { CATEGORIES } from "../data/projects";
 import "./Projects.css";
 
@@ -10,30 +11,13 @@ function Projects() {
   const [query, setQuery] = useState("");
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // Fetch projects from the PHP API
   useEffect(() => {
-    fetch("/api/projects.php")
-      .then((res) => res.json())
-      .then((data) => {
-        // Map the data to match the keys expected by ProjectCard
-        const formattedData = data.map((p) => ({
-          id: p.id,
-          title: p.title,
-          description: p.description,
-          category: p.category,
-          author: p.author,
-          imageUrl: p.image_url,
-          githubUrl: p.github_url,
-          demoUrl: p.demo_url,
-        }));
-        setProjects(formattedData);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching projects:", err);
-        setLoading(false);
-      });
+    api("/api/projects.php")
+      .then(setProjects)
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, []);
 
   const normalizedQuery = query.trim().toLowerCase();
@@ -50,7 +34,36 @@ function Projects() {
     setQuery("");
   };
 
-  if (loading) return <p className="container">Loading projects...</p>;
+  let content;
+  if (loading) {
+    content = <p>Loading projects...</p>;
+  } else if (error) {
+    content = <p role="alert">{error}</p>;
+  } else if (visibleProjects.length === 0) {
+    content = (
+      <div className="projects-empty">
+        <p className="projects-empty__title">No projects found</p>
+        <p className="projects-empty__text">
+          Try a different word or category.
+        </p>
+        <button
+          type="button"
+          className="projects-empty__btn"
+          onClick={clearFilters}
+        >
+          Clear filters
+        </button>
+      </div>
+    );
+  } else {
+    content = (
+      <div className="projects-page__grid">
+        {visibleProjects.map((project) => (
+          <ProjectCard key={project.id} {...project} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="container projects-page">
@@ -68,33 +81,15 @@ function Projects() {
           selected={selectedCategory}
           onSelect={setSelectedCategory}
         />
-        <p className="projects-count" aria-live="polite">
-          Showing {visibleProjects.length}{" "}
-          {visibleProjects.length === 1 ? "project" : "projects"}
-        </p>
+        {!loading && !error && (
+          <p className="projects-count" aria-live="polite">
+            Showing {visibleProjects.length}{" "}
+            {visibleProjects.length === 1 ? "project" : "projects"}
+          </p>
+        )}
       </div>
 
-      {visibleProjects.length > 0 ? (
-        <div className="projects-page__grid">
-          {visibleProjects.map((project) => (
-            <ProjectCard key={project.id} {...project} />
-          ))}
-        </div>
-      ) : (
-        <div className="projects-empty">
-          <p className="projects-empty__title">No projects found</p>
-          <p className="projects-empty__text">
-            Try a different word or category.
-          </p>
-          <button
-            type="button"
-            className="projects-empty__btn"
-            onClick={clearFilters}
-          >
-            Clear filters
-          </button>
-        </div>
-      )}
+      {content}
     </div>
   );
 }

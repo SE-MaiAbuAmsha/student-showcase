@@ -1,6 +1,4 @@
 <?php
-// projects.php: Fetch projects. Can filter by student_id.
-
 require_once 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
@@ -10,17 +8,24 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 }
 
 try {
-    // 1. Check if a student_id is provided in the URL (e.g., projects.php?student_id=6)
-    $student_id = isset($_GET['student_id']) ? (int)$_GET['student_id'] : null;
+    $student_id = null;
 
+    if (isset($_GET['mine']) && $_GET['mine'] == '1') {
+        if (isset($_GET['student_id'])) {
+            $student_id = (int)$_GET['student_id'];
+        }
+    } elseif (isset($_GET['student_id'])) {
+        $student_id = (int)$_GET['student_id'];
+    }
     $sql = "
         SELECT 
             p.id, 
             p.title, 
             p.description, 
-            p.image_url, 
-            p.github_url, 
-            p.demo_url, 
+            p.image_url AS imageUrl, 
+            p.github_url AS githubUrl, 
+            p.demo_url AS demoUrl, 
+            p.student_id AS studentId,
             c.name AS category, 
             s.name AS author 
         FROM projects p
@@ -28,7 +33,6 @@ try {
         JOIN students s ON p.student_id = s.id
     ";
 
-    // 2. If student_id is provided, filter by it
     if ($student_id) {
         $sql .= " WHERE p.student_id = ?";
     }
@@ -37,7 +41,6 @@ try {
 
     $stmt = $pdo->prepare($sql);
 
-    // 3. Execute with or without the parameter
     if ($student_id) {
         $stmt->execute([$student_id]);
     } else {
@@ -49,7 +52,6 @@ try {
     http_response_code(200);
     echo json_encode($projects);
 } catch (PDOException $e) {
-    error_log('Fetch projects failed: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['error' => 'Server error: ' . $e->getMessage()]);
 }

@@ -145,3 +145,8 @@
     height: 240px;
   }
 }
+.details__error {
+  margin: 16px 0 0;
+  color: #b91c1c;
+  font-weight: 600;
+}

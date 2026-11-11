@@ -24,7 +24,7 @@ export default function SignUp() {
     e.preventDefault();
     setError("");
 
-    // CHANGED: length check first, then the match check
+    // length check first, then the match check
     if (password.length < 8) {
       setError("Password must be at least 8 characters.");
       return;
@@ -34,9 +34,9 @@ export default function SignUp() {
       return;
     }
 
-    setLoading(true); // CHANGED: block double clicks while the request runs
+    setLoading(true); // block double clicks while the request runs
     try {
-      // CHANGED: relative URL. The Vite proxy forwards /api to Apache.
+      // relative URL. The Vite proxy forwards /api to Apache.
       const response = await fetch("/api/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -50,10 +50,10 @@ export default function SignUp() {
         setError(data.error || "Registration failed.");
       }
     } catch {
-      // CHANGED: a clear message, nothing technical shown to the user
+      //a clear message, nothing technical shown to the user
       setError("Could not reach the server. Please try again.");
     } finally {
-      setLoading(false); // CHANGED: always enable the button again
+      setLoading(false); // always enable the button again
     }
   };
   return (
@@ -127,10 +127,11 @@ export default function SignUp() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                <div
+                <button
+                  type="button"
                   className="icon"
                   onClick={() => setShowPassword(!showPassword)}
-                  style={{ cursor: "pointer" }}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
                     <svg
@@ -157,7 +158,7 @@ export default function SignUp() {
                       <circle cx="12" cy="12" r="3"></circle>
                     </svg>
                   )}
-                </div>
+                </button>
               </div>
               <small className="hint">ℹ️ At least 8 characters</small>
             </div>
@@ -172,10 +173,11 @@ export default function SignUp() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                 />
-                <div
+                <button
+                  type="button"
                   className="icon"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  style={{ cursor: "pointer" }}
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showConfirmPassword ? (
                     <svg
@@ -202,7 +204,7 @@ export default function SignUp() {
                       <circle cx="12" cy="12" r="3"></circle>
                     </svg>
                   )}
-                </div>
+                </button>
               </div>
             </div>
             {error && (

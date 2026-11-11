@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProjectForm from "../components/ProjectForm";
 import "./ShareProject.css";
 import BackLink from "../components/BackLink";
@@ -18,8 +18,10 @@ export default function ShareProject() {
         <h1>Share a project</h1>
         <p>Tell visitors what you built and where they can see it.</p>
       </div>
-
-      <ProjectForm onSave={handleSave} onCancel={() => navigate("/profile")} />
+      <ProjectForm
+        onSave={() => navigate("/profile")}
+        onCancel={() => navigate("/profile")}
+      />{" "}
     </div>
   );
 }

@@ -6,8 +6,7 @@ $db_name = 'student_showcase_db';
 $db_user = 'root';
 $db_pass = '';
 
-// Every API answer is JSON.
-// CHANGED: the CORS lines were removed because the Vite proxy makes them unnecessary
+// the CORS lines were removed because the Vite proxy makes them unnecessary
 header('Content-Type: application/json; charset=UTF-8');
 
 function respond($status, $data)
@@ -24,11 +23,11 @@ try {
         $db_pass,
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,       // throw errors instead of failing silently
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,  // CHANGED: rows come back as named arrays
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,  // rows come back as named arrays
         ]
     );
 } catch (PDOException $e) {
-    // CHANGED: the real reason goes to the server log, the browser gets a generic message
+    // the real reason goes to the server log, the browser gets a generic message
     error_log('DB connection failed: ' . $e->getMessage());
     respond(500, ['error' => 'Server error. Please try again later.']);
 }

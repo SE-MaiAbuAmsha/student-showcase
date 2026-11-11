@@ -11,7 +11,7 @@ export default function ProjectForm({
 }) {
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
-    category: initialData?.category || "Web",
+    category: initialData?.category || "Web Development",
     description: initialData?.description || "",
     githubUrl: initialData?.githubUrl || "",
     demoUrl: initialData?.demoUrl || "",
@@ -22,7 +22,6 @@ export default function ProjectForm({
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,37 +31,26 @@ export default function ProjectForm({
       return;
     }
 
-    // Map the category name to its ID (Based on your database)
-    const categoryMap = {
-      "Web Development": 1,
-      "UX Design": 2,
-      AI: 3,
-      "Business Analytics": 4,
-      Python: 5,
-    };
-
-    // Determine if we are editing or creating
     const isEditing = !!initialData;
 
     const payload = {
-      student_id: studentId, // Only needed for Create
-      project_id: isEditing ? initialData.id : null, // Only needed for Update
-      category_id: categoryMap[formData.category] || 1,
+      student_id: studentId,
+      project_id: isEditing ? initialData.id : null,
+      category: formData.category,
       title: formData.title,
       description: formData.description,
-      image_url: formData.imageUrl,
-      github_url: formData.githubUrl,
-      demo_url: formData.demoUrl,
+      imageUrl: formData.imageUrl,
+      githubUrl: formData.githubUrl,
+      demoUrl: formData.demoUrl,
     };
 
-    // Choose the API endpoint based on the mode
     const endpoint = isEditing
       ? "/api/update_project.php"
       : "/api/create_project.php";
 
     try {
       const response = await fetch(endpoint, {
-        method: "POST", // We'll use POST for both to simplify the CORS setup
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
@@ -70,7 +58,6 @@ export default function ProjectForm({
       const data = await response.json();
 
       if (response.ok) {
-        // Success! Redirect to profile page
         onSave();
       } else {
         alert(data.error || "Failed to save project.");
@@ -170,7 +157,6 @@ export default function ProjectForm({
                   value={formData.githubUrl}
                   onChange={handleChange}
                   placeholder="https://github.com/..."
-                  required
                 />
               </div>
             </div>

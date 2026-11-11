@@ -1,5 +1,5 @@
 <?php
-// register.php: create a student account.
+//  create a student account.
 require_once 'db.php';
 
 // Only POST is accepted.
@@ -7,13 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     respond(405, ['error' => 'Method not allowed. Please use POST.']);
 }
 
-// CHANGED: read the JSON body as an array. A missing field becomes an empty string.
+//  read the JSON body as an array. A missing field becomes an empty string.
 $data     = json_decode(file_get_contents('php://input'), true);
 $name     = trim((string)($data['name'] ?? ''));
 $email    = strtolower(trim((string)($data['email'] ?? '')));
 $password = (string)($data['password'] ?? '');
 
-// CHANGED: validate on the server too, because the browser checks can be bypassed
+//  validate on the server too, because the browser checks can be bypassed
 if ($name === '' || $email === '' || $password === '') {
     respond(400, ['error' => 'Please fill all required fields (name, email, password).']);
 }
@@ -31,7 +31,7 @@ if (strlen($password) < 8 || strlen($password) > 72) { // bcrypt only reads 72 b
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
 try {
-    // CHANGED: no SELECT first. The UNIQUE index on email does the check for us.
+    // no SELECT first. The UNIQUE index on email does the check for us.
     $stmt = $pdo->prepare('INSERT INTO students (name, email, password_hash) VALUES (?, ?, ?)');
     $stmt->execute([$name, $email, $passwordHash]);
 
@@ -44,11 +44,11 @@ try {
         ],
     ]);
 } catch (PDOException $e) {
-    // CHANGED: SQLSTATE 23000 means a duplicate value in a UNIQUE column (the email)
+    //  SQLSTATE 23000 means a duplicate value in a UNIQUE column (the email)
     if ($e->getCode() === '23000') {
         respond(409, ['error' => 'Email is already registered.']);
     }
-    // CHANGED: log the details, send only a generic message
+    //  log the details, send only a generic message
     error_log('Register failed: ' . $e->getMessage());
     respond(500, ['error' => 'Server error. Please try again later.']);
 }
