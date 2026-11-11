@@ -51,7 +51,7 @@ npm run dev
 | `/edit-project/:id` | Owner | Edit or delete a project |
 
 ## User flow
-![User Flow Diagram](https://github.com/SE-MaiAbuAmsha/student-showcase/blob/main/student_showcase_flow_visitor_read_only.png)
+![User Flow Diagram](https://github.com/SE-MaiAbuAmsha/student-showcase/blob/main/student_showcase_flow.png)
 
 
 ## Data model (planned)
