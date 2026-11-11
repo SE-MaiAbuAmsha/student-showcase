@@ -1,8 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PlaneField from "./PlaneField";
 import "./Hero.css";
 
 function Hero() {
+  const location = useLocation();
+
+  const userName = localStorage.getItem("userName");
+  const isLoggedIn = !!userName;
+
   return (
     <section className="hero">
       <PlaneField />
@@ -20,9 +25,16 @@ function Hero() {
           <Link to="/projects" className="hero__btn hero__btn--primary">
             Explore projects
           </Link>
-          <Link to="/signup" className="hero__btn hero__btn--outline">
-            Join as a student
-          </Link>
+
+          {isLoggedIn ? (
+            <Link to="/share-project" className="hero__btn hero__btn--outline">
+              Share a Project
+            </Link>
+          ) : (
+            <Link to="/signup" className="hero__btn hero__btn--outline">
+              Join as a student
+            </Link>
+          )}
         </div>
       </div>
 
