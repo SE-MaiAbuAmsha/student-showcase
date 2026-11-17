@@ -86,14 +86,14 @@ components/ Navbar, Footer, Layout, Hero, PlaneField, ProjectCard, ProjectForm, 
 pages/ Home, Projects, ProjectDetails, Profile, ShareProject, EditProject, Login, SignUp
 data/ sample projects and categories
 assets/ project images
-api/ PHP endpoints (in progress)
-database/ schema.sql (in progress)
+api/ PHP endpoints 
+database/ schema.sql 
 ````
 
 ## Design notes
 
 - Palette: navy `#0D1C42`, blue `#22396F`, cream `#FCF1D0`, ink `#010736`.
-- The logo is an original mark (a folded W with a small paper airplane) made for this project. It is not the official Paper Airplanes logo.
+- The logo is an original mark (a folded W with a small paper airplane) made for this project.
 
 ## Known limitations
 
@@ -106,9 +106,9 @@ database/ schema.sql (in progress)
 - [x] Front end with sample data
 - [x] MySQL schema and seed data
 - [x] Read endpoints and connecting the front end
-- [ ] Create, update and delete endpoints
-- [ ] Sessions, ownership checks and validation
-- [ ] Testing, security checklist and final polish
+- [x] Create, update and delete endpoints
+- [x] Sessions, ownership checks and validation
+- [x] Testing, security checklist and final polish
 
 ## Credits
 
