@@ -16,8 +16,8 @@ A web platform where students of the Paper Airplanes _Women in Tech_ program pub
 | Layer              | Technology                               |
 | ------------------ | ---------------------------------------- |
 | Front end          | React 19 (Vite), React Router            |
-| Back end (planned) | PHP 8 with PDO, JSON API                 |
-| Database (planned) | MySQL                                    |
+| Back end  | PHP 8 with PDO, JSON API                 |
+| Database  | MySQL                                    |
 | Fonts              | Fraunces and DM Sans (via `@fontsource`) |
 
 ## Getting Started
