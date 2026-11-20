@@ -29,7 +29,6 @@ cd frontend
 npm install
 npm run dev
 
-(Link: `http://localhost:5173`).
 
 ### Back end 
 
