@@ -8,7 +8,6 @@ A web platform where students of the Paper Airplanes _Women in Tech_ program pub
 - **For Visitors:** Browse all projects, search, filter by category, and view project details without needing an account.
 - **For Students:** Sign up, log in, and publish/edit/delete **their own** projects.
 - Profile page to manage the student's projects.
-- Responsive layout, keyboard-friendly controls, and reduced-motion support for the animated planes.
 
 ## Tech Stack
 
