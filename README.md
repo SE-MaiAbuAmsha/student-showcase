@@ -112,4 +112,3 @@ database/ schema.sql
 ## Credits
 
 Built as the final project of the Web Development 2 course in the Paper Airplanes _Women in Tech_ program. Project names, authors and descriptions in the sample data are fictional.
-````
