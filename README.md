@@ -2,7 +2,6 @@
 
 A web platform where students of the Paper Airplanes _Women in Tech_ program publish their projects, and visitors can browse them by category.
 
-> **Status:** The front-end is complete and runs on sample data. The PHP API and MySQL database are in progress.
 
 ## MVP Features
 
