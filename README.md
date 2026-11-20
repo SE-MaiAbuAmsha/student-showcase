@@ -31,7 +31,7 @@ npm run dev
 
 (Link: `http://localhost:5173`).
 
-### Back end (coming soon)
+### Back end 
 
 1. Install XAMPP and start Apache and MySQL.
 2. Import `database/schema.sql` with phpMyAdmin.
@@ -53,7 +53,7 @@ npm run dev
 ![User Flow Diagram](https://github.com/SE-MaiAbuAmsha/student-showcase/blob/main/student_showcase_flow.png)
 
 
-## Data model (planned)
+## Data model 
 
 | Table        | Columns                                                                                   |
 | ------------ | ----------------------------------------------------------------------------------------- |
@@ -61,7 +61,7 @@ npm run dev
 | `categories` | id, name (unique)                                                                         |
 | `projects`   | id, user_id, category_id, title, description, image_url, github_url, demo_url, created_at |
 
-## API (planned)
+## API 
 
 | Method       | Endpoint                    | Auth  | Purpose                     |
 | ------------ | --------------------------- | ----- | --------------------------- |
